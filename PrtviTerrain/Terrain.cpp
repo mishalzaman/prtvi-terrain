@@ -30,7 +30,6 @@ void Terrain::decreaseHeightScale() {
 }
 
 void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition) {
-	printf("%f\n", this->heightScale);
 	glBindTexture(GL_TEXTURE_2D, this->diffuseTexture);
 	shader.use();
     shader.setMat4("projection", projection);

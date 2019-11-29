@@ -74,3 +74,8 @@ glm::vec3 CameraFP::getCameraPosition()
 {
 	return this->position;
 }
+
+void CameraFP::updatePosition(glm::vec3 position)
+{
+	this->position = position;
+}

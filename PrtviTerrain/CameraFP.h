@@ -22,6 +22,7 @@ public:
 	void strafeLeft(float deltaTime);
 	void mousePositionUpdate(float deltaTime, int x, int y);
 	glm::vec3 getCameraPosition();
+	void updatePosition(glm::vec3 position);
 private:
 	float speed = 0.001f;
 	float mouseSensitivity = 0.2f;

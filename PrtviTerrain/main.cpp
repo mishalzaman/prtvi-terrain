@@ -7,6 +7,7 @@
 #include "Terrain.h"
 #include "Shader.h"
 #include "Light.h"
+#include "Player.h"
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -61,6 +62,7 @@ int main( int argc, char* args[] )
     Input input             = Input();
     Terrain terrain         = Terrain("assets/test.pgm");
 	Light light			    = Light();
+	Player player			= Player();
 
 	// Projection / View
 	glm::mat4 projection	= glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
@@ -77,7 +79,8 @@ int main( int argc, char* args[] )
     // https://gamedev.stackexchange.com/questions/111875/terrain-shader-from-heightmap-opengl-glsl
     terrain.load(glm::vec3(0,0,0));
 	terrain.diffuseMap("assets/placeholder.png");
-	light.load(glm::vec3(0,1,0));
+	light.load(glm::vec3(0,2,0));
+	player.load(glm::vec3(0, 1, 0));
 
     while (!quit)
     {
@@ -161,6 +164,7 @@ int main( int argc, char* args[] )
 
             terrain.draw(projection, view, terrainDiffuseShader, light.position);
 			light.draw(projection, view, lightShader);
+			player.draw(projection, view, lightShader);
 
             SDL_GL_SwapWindow(window);
         } else {
