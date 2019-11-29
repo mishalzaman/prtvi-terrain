@@ -34,7 +34,7 @@ class Terrain
 		// heightmap
 		PGM::Image heightmapData;
         void processVertices();
-		float heightScale = 1.0f;
+		float heightScale = 0.5f;
 
 		// diffuse map
 		unsigned char* diffusemapData;
