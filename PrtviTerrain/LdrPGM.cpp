@@ -1,6 +1,6 @@
-#include "PGM.h"
+#include "LdrPGM.h"
 
-bool PGM::load(const char * filename, PGM::Image& image)
+bool LdrPGM::load(const char * filename, STImage& image)
 {
 	std::ifstream infile(filename);
 	std::stringstream ss;

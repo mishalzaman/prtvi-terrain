@@ -6,14 +6,15 @@
 #include <vector>
 #include <iostream>
 #include "STVertex.h"
-#include "PGM.h"
+#include "STImage.h"
+#include "LdrPGM.h"
 
 using namespace std;
 
 namespace Heightmap
 {
 	void process(
-		PGM::Image heightmapData,
+		STImage heightmapData,
 		std::vector<STVertex>& mesh,
 		std::vector<glm::uvec3> &indices,
 		float scale

@@ -1,6 +1,6 @@
 #include "Heightmap.h"
 
-void Heightmap::process(PGM::Image heightmapData, std::vector<STVertex>& mesh, std::vector<glm::uvec3>& indices, float scale)
+void Heightmap::process(STImage heightmapData, std::vector<STVertex>& mesh, std::vector<glm::uvec3>& indices, float scale)
 {
 	// get a width:height ratio in n:1 format
 	int ratio_divisor_w = heightmapData.width / heightmapData.height;

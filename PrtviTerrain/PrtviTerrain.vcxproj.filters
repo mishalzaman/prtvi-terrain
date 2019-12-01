@@ -42,10 +42,10 @@
     <ClCompile Include="Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PGM.cpp">
+    <ClCompile Include="CameraFreeLook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CameraFreeLook.cpp">
+    <ClCompile Include="LdrPGM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,11 +71,14 @@
     <ClInclude Include="STVertex.h">
       <Filter>structs</Filter>
     </ClInclude>
-    <ClInclude Include="PGM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CameraFreeLook.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LdrPGM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="STImage.h">
+      <Filter>structs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

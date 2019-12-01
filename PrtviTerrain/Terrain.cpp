@@ -5,7 +5,7 @@
 
 Terrain::Terrain(const char* heightmap)
 {
-	PGM::load(heightmap, this->heightmapData);
+	LdrPGM::load(heightmap, this->heightmapData);
 }
 
 Terrain::~Terrain() {

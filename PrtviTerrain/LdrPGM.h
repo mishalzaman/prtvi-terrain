@@ -1,12 +1,13 @@
-#ifndef PGM_H
-#define PGM_H
+#ifndef LDR_PGM_H
+#define LDR_PGM_H
 
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "STImage.h"
 
-namespace PGM {
+namespace LdrPGM {
 	struct Image {
 		int width;
 		int height;
@@ -14,7 +15,7 @@ namespace PGM {
 		std::vector<int> pixels;
 	};
 
-	bool load(const char* filename, PGM::Image& image);
+	bool load(const char* filename, STImage& image);
 };
 
 #endif

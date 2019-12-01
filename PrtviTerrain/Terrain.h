@@ -9,7 +9,7 @@
 #include "Shader.h"
 #include <iostream>
 #include "STVertex.h"
-#include "PGM.h"
+#include "STImage.h"
 
 using namespace std;
 
@@ -32,7 +32,7 @@ class Terrain
 	    std::vector<glm::uvec3> indices;
 
 		// heightmap
-		PGM::Image heightmapData;
+		STImage heightmapData;
         void processVertices();
 		float heightScale = 0.5f;
 
