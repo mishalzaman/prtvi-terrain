@@ -2,12 +2,11 @@
 #include <GL/glew.h>
 #include <iostream>
 #include "InitSystem.h"
-#include "CameraFP.h"
+#include "CameraFreeLook.h"
 #include "Input.h"
 #include "Terrain.h"
 #include "Shader.h"
 #include "Light.h"
-#include "Player.h"
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -50,7 +49,7 @@ int main( int argc, char* args[] )
     initSystem.enableMouseCapture(true);
     initSystem.centerMouse(window, SCREEN_WIDTH, SCREEN_HEIGHT);
     initSystem.enableWireframe(false);
-    initSystem.enableCulling(true); 
+    // initSystem.enableCulling(true); 
 
 	// Shaders
 	Shader terrainShader	= Shader("shaders/terrain.vert", "shaders/terrain.frag");
@@ -58,15 +57,14 @@ int main( int argc, char* args[] )
 	Shader lightShader		= Shader("shaders/light.vert", "shaders/light.frag");
 
     // Initializations
-    CameraFP cameraFP       = CameraFP(SCREEN_WIDTH, SCREEN_HEIGHT);
+	CameraFreeLook camera = CameraFreeLook(SCREEN_WIDTH, SCREEN_HEIGHT);
     Input input             = Input();
-    Terrain terrain         = Terrain("assets/test.pgm");
+    Terrain terrain         = Terrain("assets/heightmap.pgm");
 	Light light			    = Light();
-	Player player			= Player();
 
 	// Projection / View
 	glm::mat4 projection	= glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
-	glm::mat4 view			= cameraFP.getViewMatrix();
+	glm::mat4 view			= camera.getViewMatrix();
 
 
     /*------
@@ -78,9 +76,8 @@ int main( int argc, char* args[] )
     // terrain shader colouring
     // https://gamedev.stackexchange.com/questions/111875/terrain-shader-from-heightmap-opengl-glsl
     terrain.load(glm::vec3(0,0,0));
-	terrain.diffuseMap("assets/placeholder.png");
+	terrain.diffuseMap("assets/diffuse.png");
 	light.load(glm::vec3(0,2,0));
-	player.load(glm::vec3(0, 1, 0));
 
     while (!quit)
     {
@@ -111,17 +108,17 @@ int main( int argc, char* args[] )
 					if (input.isMouseMotion()) {
 						int x, y;
 						SDL_GetMouseState(&x, &y);
-						cameraFP.mousePositionUpdate(deltaTime, x, y);
+						camera.mousePositionUpdate(deltaTime, x, y);
 						SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
 					}
 
-					view = cameraFP.getViewMatrix();
+					view = camera.getViewMatrix();
 				}
 
-				if (input.isW()) { cameraFP.forward(deltaTime); };
-				if (input.isS()) { cameraFP.backward(deltaTime); };
-				if (input.isA()) { cameraFP.strafeLeft(deltaTime); };
-				if (input.isD()) { cameraFP.strafeRight(deltaTime); };
+				if (input.isW()) { camera.forward(deltaTime); };
+				if (input.isS()) { camera.backward(deltaTime); };
+				if (input.isA()) { camera.strafeLeft(deltaTime); };
+				if (input.isD()) { camera.strafeRight(deltaTime); };
 				if (input.isUpArrow()) { light.forward(); }
 				if (input.isDownArrow()) { light.backward(); }
 			} else if (input.isZ()){
@@ -164,7 +161,6 @@ int main( int argc, char* args[] )
 
             terrain.draw(projection, view, terrainDiffuseShader, light.position);
 			light.draw(projection, view, lightShader);
-			player.draw(projection, view, lightShader);
 
             SDL_GL_SwapWindow(window);
         } else {

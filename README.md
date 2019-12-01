@@ -4,4 +4,4 @@
 - Loads diffuse map
 
 ## Current version
-![](diffuse_lighting.gif)
+![](current.jpg)
