@@ -1,7 +1,11 @@
 #include "Heightmap.h"
 
-void Heightmap::process(STImage heightmapData, std::vector<STVertex>& mesh, std::vector<glm::uvec3>& indices, float scale)
+bool Heightmap::process(STImage heightmapData, std::vector<STVertex>& mesh, std::vector<glm::uvec3>& indices, float scale)
 {
+	if (heightmapData.width == 0 || heightmapData.height == 0) {
+		return false;
+	}
+
 	// get a width:height ratio in n:1 format
 	int ratio_divisor_w = heightmapData.width / heightmapData.height;
 	int ratio_divisor_h = heightmapData.height / heightmapData.height;
@@ -52,6 +56,8 @@ void Heightmap::process(STImage heightmapData, std::vector<STVertex>& mesh, std:
 			indices.push_back(glm::uvec3(row1 + column, row2 + column + 1, row2 + column));
 		}
 	}
+
+	return true;
 }
 
 void Heightmap::textures(std::vector<STVertex> &mesh)

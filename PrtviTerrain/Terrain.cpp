@@ -1,24 +1,34 @@
 #include "Terrain.h"
+#include <ctime>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "../vendor/stb_image.h"
 
-Terrain::Terrain(const char* heightmap)
+Terrain::Terrain()
 {
-	LdrPGM::load(heightmap, this->heightmapData);
+	// setup model matrix
+	this->model = glm::translate(this->model, this->position);
+	this->model = glm::scale(this->model, this->scale);
 }
 
 Terrain::~Terrain() {
 
 }
 
-void Terrain::load(glm::vec3 position) {
-	this->position = position;
-	this->model = glm::translate(this->model, this->position);
-
+bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilename)
+{
+	if (!LdrPGM::load(heightmapFilename, this->heightmapData))
+		return false;
+	
 	Heightmap::process(this->heightmapData, this->mesh, this->indices, this->heightScale);
 	Heightmap::normals(this->mesh, this->indices);
-    this->processVertices();
+
+	this->vertexBuffers();
+
+	if (!this->loadDiffuseMap(diffusemapFilename))
+		return false;
+
+	return true;
 }
 
 void Terrain::increaseHeightScale() {
@@ -48,7 +58,7 @@ void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::
 	glDrawElements(GL_TRIANGLES, (GLsizei)this->indices.size() * 3, GL_UNSIGNED_INT, 0);
 }
 
-void Terrain::processVertices() {
+void Terrain::vertexBuffers() {
     unsigned int IBO;
 
 	glGenVertexArrays(1, &this->VAO);
@@ -80,7 +90,7 @@ void Terrain::processVertices() {
 	glBindVertexArray(0);
 }
 
-void Terrain::diffuseMap(const char* filename)
+bool Terrain::loadDiffuseMap(const char* filename)
 {
 	glGenTextures(1, &this->diffuseTexture);
 	glBindTexture(GL_TEXTURE_2D, this->diffuseTexture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
@@ -100,9 +110,11 @@ void Terrain::diffuseMap(const char* filename)
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->diffusemapData);
 		glGenerateMipmap(GL_TEXTURE_2D);
+
+		return true;
 	}
 	else
 	{
-		std::cout << "Failed to load diffuse texture" << std::endl;
+		return false;
 	}
 }

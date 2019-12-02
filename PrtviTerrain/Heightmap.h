@@ -13,7 +13,7 @@ using namespace std;
 
 namespace Heightmap
 {
-	void process(
+	bool process(
 		STImage heightmapData,
 		std::vector<STVertex>& mesh,
 		std::vector<glm::uvec3> &indices,

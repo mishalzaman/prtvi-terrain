@@ -49,7 +49,7 @@ int main( int argc, char* args[] )
     initSystem.enableMouseCapture(true);
     initSystem.centerMouse(window, SCREEN_WIDTH, SCREEN_HEIGHT);
     initSystem.enableWireframe(false);
-    // initSystem.enableCulling(true); 
+    initSystem.enableCulling(true); 
 
 	// Shaders
 	Shader terrainShader	= Shader("shaders/terrain.vert", "shaders/terrain.frag");
@@ -57,9 +57,9 @@ int main( int argc, char* args[] )
 	Shader lightShader		= Shader("shaders/light.vert", "shaders/light.frag");
 
     // Initializations
-	CameraFreeLook camera = CameraFreeLook(SCREEN_WIDTH, SCREEN_HEIGHT);
+	CameraFreeLook camera   = CameraFreeLook(SCREEN_WIDTH, SCREEN_HEIGHT);
     Input input             = Input();
-    Terrain terrain         = Terrain("assets/heightmap.pgm");
+    Terrain terrain         = Terrain();
 	Light light			    = Light();
 
 	// Projection / View
@@ -71,13 +71,12 @@ int main( int argc, char* args[] )
     LOAD
     ------*/
 
-    // https://tangrams.github.io/heightmapper/#13.2625/17.9482/-98.9671
-    
-    // terrain shader colouring
-    // https://gamedev.stackexchange.com/questions/111875/terrain-shader-from-heightmap-opengl-glsl
-    terrain.load(glm::vec3(0,0,0));
-	terrain.diffuseMap("assets/diffuse.png");
+	terrain.load("assets/heightmap.pgm", "assets/diffuse.png");
 	light.load(glm::vec3(0,2,0));
+
+	/*--------
+	UPDATE
+	-------*/
 
     while (!quit)
     {
