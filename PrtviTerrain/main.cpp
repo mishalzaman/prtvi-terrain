@@ -71,7 +71,7 @@ int main( int argc, char* args[] )
     LOAD
     ------*/
 
-	terrain.load("assets/heightmap.pgm", "assets/diffuse.png");
+	terrain.load("assets/heightmap2049.pgm", "assets/diffuse2049.png");
 	light.load(glm::vec3(0,2,0));
 
 	/*--------
@@ -147,7 +147,7 @@ int main( int argc, char* args[] )
 
             if (input.isQuit()) { quit = true; }
 
-            // printf("%f\n", deltaTime);
+             printf("%f\n", deltaTime);
 
             /*------
             RENDER

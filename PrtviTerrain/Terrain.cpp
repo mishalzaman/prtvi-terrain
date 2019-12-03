@@ -17,16 +17,32 @@ Terrain::~Terrain() {
 
 bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilename)
 {
+	std::clock_t begin = clock();
 	if (!LdrPGM::load(heightmapFilename, this->heightmapData))
 		return false;
+	float duration = (clock() - begin) / 1000;
+	printf("Load heightmap PGM file duration: %f\n", duration);
 	
+	begin = clock();
 	Heightmap::process(this->heightmapData, this->mesh, this->indices, this->heightScale);
+	duration = (clock() - begin) / 1000;
+	printf("Load mesh and indices duration: %f\n", duration);
+
+	begin = clock();
 	Heightmap::normals(this->mesh, this->indices);
-
+	duration = (clock() - begin) / 1000;
+	printf("Load normals duration: %f\n", duration);
+	
+	begin = clock();
 	this->vertexBuffers();
+	duration = (clock() - begin);
+	printf("Load VBO and VAO duration: %f\n", duration);
 
+	begin = clock();
 	if (!this->loadDiffuseMap(diffusemapFilename))
 		return false;
+	duration = (clock() - begin);
+	printf("Load diffuse map duration: %f\n", duration);
 
 	return true;
 }
