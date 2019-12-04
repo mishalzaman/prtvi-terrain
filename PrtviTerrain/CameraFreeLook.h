@@ -24,7 +24,7 @@ public:
 	glm::vec3 getCameraPosition();
 	void updatePosition(glm::vec3 position);
 private:
-	float speed = 0.001f;
+	float speed = 0.01f;
 	float mouseSensitivity = 0.2f;
 	int screenWidthMid;
 	int screenHeightMid;
@@ -32,7 +32,7 @@ private:
 	float yaw = -89.0f; // this is typicall where the view faces towards. -90 degrees is facing towards the z axis
 	float pitch = -45.0f;
 
-	glm::vec3 position = glm::vec3(0.0f, 2.0f, 1.0f); // position of camera in the world
+	glm::vec3 position = glm::vec3(0.0f, 10.0f, 1.0f); // position of camera in the world
 	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	glm::vec3 frontVector;

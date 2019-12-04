@@ -71,8 +71,8 @@ int main( int argc, char* args[] )
     LOAD
     ------*/
 
-	terrain.load("assets/heightmap2049.pgm", "assets/diffuse2049.png");
-	light.load(glm::vec3(0,2,0));
+	terrain.load("assets/heightmap1025.pgm", "assets/diffuse1025.png");
+	light.load(glm::vec3(0,10,0));
 
 	/*--------
 	UPDATE
