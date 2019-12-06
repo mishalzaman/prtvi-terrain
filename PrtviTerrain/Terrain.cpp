@@ -1,9 +1,6 @@
 #include "Terrain.h"
 #include <ctime>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "../vendor/stb_image.h"
-
 Terrain::Terrain()
 {
 	// setup model matrix
@@ -118,19 +115,19 @@ bool Terrain::loadDiffuseMap(const char* filename)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 	// load image, create texture and generate mipmaps
 	int width, height, nrChannels;
-	// The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
 
-	this->diffusemapData = stbi_load(filename, &width, &height, &nrChannels, STBI_rgb_alpha);
+	this->diffusemapData = LdrStbiWrapper::load(filename, width, height, nrChannels, LdrStbiWrapper::STBI_rgb_alpha);
 	if (this->diffusemapData)
 	{
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->diffusemapData);
 		glGenerateMipmap(GL_TEXTURE_2D);
-
+		LdrStbiWrapper::free(this->diffusemapData);
 		return true;
 	}
 	else
 	{
+		LdrStbiWrapper::free(this->diffusemapData);
 		return false;
 	}
 }
