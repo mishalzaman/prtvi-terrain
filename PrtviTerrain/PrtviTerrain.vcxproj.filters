@@ -48,6 +48,9 @@
     <ClCompile Include="LdrPGM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LdrStbiWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Heightmap.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="STImage.h">
       <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="LdrStbiWrapper.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

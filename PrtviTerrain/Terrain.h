@@ -10,6 +10,7 @@
 #include <iostream>
 #include "STVertex.h"
 #include "STImage.h"
+#include "LdrStbiWrapper.h"
 
 using namespace std;
 

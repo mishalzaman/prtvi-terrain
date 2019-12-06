@@ -126,6 +126,7 @@
     <ClCompile Include="Heightmap.cpp" />
     <ClCompile Include="InitSystem.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="LdrStbiWrapper.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="LdrPGM.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="InitSystem.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="LdrStbiWrapper.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LdrPGM.h" />
     <ClInclude Include="Shader.h" />
