@@ -1,5 +1,5 @@
-#ifndef LIGHT_H
-#define LIGHT_H
+#ifndef ENT_LIGHT_H
+#define ENT_LIGHT_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -8,11 +8,11 @@
 #include <vector>
 #include "STVertex.h"
 
-class Light
+class EntLight
 {
 public:
-	Light();
-	~Light();
+	EntLight();
+	~EntLight();
 	void load(glm::vec3 position);
 	void draw(glm::mat4& projection, glm::mat4& view, Shader& shader);
 	glm::vec3 position = glm::vec3(0, 0, 0);
