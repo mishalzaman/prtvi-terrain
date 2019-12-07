@@ -4,7 +4,7 @@
 #include "InitSystem.h"
 #include "CameraFreeLook.h"
 #include "Input.h"
-#include "Terrain.h"
+#include "EntTerrain.h"
 #include "Shader.h"
 #include "Light.h"
 #include "SkyBox.h"
@@ -61,7 +61,7 @@ int main( int argc, char* args[] )
     // Initializations
 	CameraFreeLook camera   = CameraFreeLook(SCREEN_WIDTH, SCREEN_HEIGHT);
     Input input             = Input();
-    Terrain terrain         = Terrain();
+	EntTerrain terrain         = EntTerrain();
 	Light light			    = Light();
 	SkyBox skybox			= SkyBox();
 
@@ -74,7 +74,7 @@ int main( int argc, char* args[] )
     LOAD
     ------*/
 
-	terrain.load("assets/heightmap1025.pgm", "assets/diffuse1025.png");
+	terrain.load("assets/heightmap513.pgm", "assets/diffuse513.png");
 	light.load(glm::vec3(0,10,0));
 	skybox.load();
 

@@ -1,18 +1,18 @@
-#include "Terrain.h"
+#include "EntTerrain.h"
 #include <ctime>
 
-Terrain::Terrain()
+EntTerrain::EntTerrain()
 {
 	// setup model matrix
 	this->model = glm::translate(this->model, this->position);
 	this->model = glm::scale(this->model, this->scale);
 }
 
-Terrain::~Terrain() {
+EntTerrain::~EntTerrain() {
 
 }
 
-bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilename)
+bool EntTerrain::load(const char * heightmapFilename, const char * diffusemapFilename)
 {
 	std::clock_t begin = clock();
 	if (!LdrPGM::load(heightmapFilename, this->heightmapData))
@@ -44,15 +44,15 @@ bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilena
 	return true;
 }
 
-void Terrain::increaseHeightScale() {
+void EntTerrain::increaseHeightScale() {
 	this->heightScale += 0.01f;
 }
 
-void Terrain::decreaseHeightScale() {
+void EntTerrain::decreaseHeightScale() {
 	this->heightScale -= 0.01f;
 }
 
-void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition) {
+void EntTerrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition) {
 	glBindTexture(GL_TEXTURE_2D, this->diffuseTexture);
 	shader.use();
     shader.setMat4("projection", projection);
@@ -71,7 +71,7 @@ void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::
 	glDrawElements(GL_TRIANGLES, (GLsizei)this->indices.size() * 3, GL_UNSIGNED_INT, 0);
 }
 
-void Terrain::vertexBuffers() {
+void EntTerrain::vertexBuffers() {
     unsigned int IBO;
 
 	glGenVertexArrays(1, &this->VAO);
@@ -103,7 +103,7 @@ void Terrain::vertexBuffers() {
 	glBindVertexArray(0);
 }
 
-bool Terrain::loadDiffuseMap(const char* filename)
+bool EntTerrain::loadDiffuseMap(const char* filename)
 {
 	glGenTextures(1, &this->diffuseTexture);
 	glBindTexture(GL_TEXTURE_2D, this->diffuseTexture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object

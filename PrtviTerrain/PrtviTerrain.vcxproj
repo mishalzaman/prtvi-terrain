@@ -132,7 +132,7 @@
     <ClCompile Include="LdrPGM.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
-    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="EntTerrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraFreeLook.h" />
@@ -145,7 +145,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="STImage.h" />
-    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="EntTerrain.h" />
     <ClInclude Include="STVertex.h" />
   </ItemGroup>
   <ItemGroup>
