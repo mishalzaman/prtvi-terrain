@@ -7,6 +7,7 @@
 #include "Terrain.h"
 #include "Shader.h"
 #include "Light.h"
+#include "SkyBox.h"
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -52,15 +53,17 @@ int main( int argc, char* args[] )
     initSystem.enableCulling(true); 
 
 	// Shaders
-	Shader terrainShader	= Shader("shaders/terrain.vert", "shaders/terrain.frag");
+	Shader terrainShader		= Shader("shaders/terrain.vert", "shaders/terrain.frag");
 	Shader terrainDiffuseShader = Shader("shaders/terrain_diffuse.vert", "shaders/terrain_diffuse.frag");
-	Shader lightShader		= Shader("shaders/light.vert", "shaders/light.frag");
+	Shader lightShader			= Shader("shaders/light.vert", "shaders/light.frag");
+	Shader skyboxShader			= Shader("shaders/skybox.vert", "shaders/skybox.frag");
 
     // Initializations
 	CameraFreeLook camera   = CameraFreeLook(SCREEN_WIDTH, SCREEN_HEIGHT);
     Input input             = Input();
     Terrain terrain         = Terrain();
 	Light light			    = Light();
+	SkyBox skybox			= SkyBox();
 
 	// Projection / View
 	glm::mat4 projection	= glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
@@ -73,6 +76,7 @@ int main( int argc, char* args[] )
 
 	terrain.load("assets/heightmap1025.pgm", "assets/diffuse1025.png");
 	light.load(glm::vec3(0,10,0));
+	skybox.load();
 
 	/*--------
 	UPDATE
@@ -158,8 +162,10 @@ int main( int argc, char* args[] )
 
 			glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
 
+			
             terrain.draw(projection, view, terrainDiffuseShader, light.position);
 			light.draw(projection, view, lightShader);
+			skybox.draw(projection, view, skyboxShader);
 
             SDL_GL_SwapWindow(window);
         } else {
