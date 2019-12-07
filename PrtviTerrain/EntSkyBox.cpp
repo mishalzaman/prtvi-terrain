@@ -1,21 +1,21 @@
-#include "SkyBox.h"
+#include "EntSkyBox.h"
 
-SkyBox::SkyBox()
+EntSkyBox::EntSkyBox()
 {
 }
 
-SkyBox::~SkyBox()
+EntSkyBox::~EntSkyBox()
 {
 	this->cleanup();
 }
 
-void SkyBox::load()
+void EntSkyBox::load()
 {
 	this->loadCubeMap();
 	this->loadCube();
 }
 
-void SkyBox::loadCubeMap()
+void EntSkyBox::loadCubeMap()
 {
 	glGenTextures(1, &this->textureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, this->textureID);
@@ -45,7 +45,7 @@ void SkyBox::loadCubeMap()
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 }
 
-void SkyBox::loadCube()
+void EntSkyBox::loadCube()
 {
 	float skyboxVertices[] = {
 		// positions          
@@ -101,7 +101,7 @@ void SkyBox::loadCube()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 }
 
-void SkyBox::cleanup()
+void EntSkyBox::cleanup()
 {
 	if (this->VBO) {
 		glDeleteBuffers(1, &this->VBO);
@@ -112,7 +112,7 @@ void SkyBox::cleanup()
 	}
 }
 
-void SkyBox::draw(glm::mat4& projection, glm::mat4& view, Shader& shader)
+void EntSkyBox::draw(glm::mat4& projection, glm::mat4& view, Shader& shader)
 {
 	glDepthFunc(GL_LEQUAL);
 	glDisable(GL_CULL_FACE);

@@ -1,5 +1,5 @@
-#ifndef SKYBOX_H
-#define SKYBOX_H
+#ifndef ENT_SKYBOX_H
+#define ENT_SKYBOX_H
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -9,13 +9,11 @@
 #include "Shader.h"
 #include "LdrStbiWrapper.h"
 
-class Shader;
-
-class SkyBox
+class EntSkyBox
 {
 public:
-	SkyBox();
-	~SkyBox();
+	EntSkyBox();
+	~EntSkyBox();
 	void load();
 	void draw(glm::mat4& projection, glm::mat4& view, Shader& shader);
 private:

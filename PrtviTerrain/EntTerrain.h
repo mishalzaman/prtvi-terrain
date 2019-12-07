@@ -1,5 +1,5 @@
-#ifndef TERRAIN_H
-#define TERRAIN_H
+#ifndef ENT_TERRAIN_H
+#define ENT_TERRAIN_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -14,11 +14,11 @@
 
 using namespace std;
 
-class Terrain
+class EntTerrain
 {
     public:
-        Terrain();
-        ~Terrain();
+		EntTerrain();
+        ~EntTerrain();
 		bool load(const char* heightmapFilename, const char* diffusemapFilename);
         void draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition);
 		void increaseHeightScale();

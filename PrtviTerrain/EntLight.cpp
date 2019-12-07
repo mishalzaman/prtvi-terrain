@@ -1,15 +1,15 @@
-#include "Light.h"
+#include "EntLight.h"
 
-Light::Light()
+EntLight::EntLight()
 {
 }
 
 
-Light::~Light()
+EntLight::~EntLight()
 {
 }
 
-void Light::load(glm::vec3 position)
+void EntLight::load(glm::vec3 position)
 {
 	this->position = position;
 	this->createSphere(16, 16);
@@ -40,7 +40,7 @@ void Light::load(glm::vec3 position)
 	glBindVertexArray(0);
 }
 
-void Light::draw(glm::mat4 & projection, glm::mat4 & view, Shader & shader)
+void EntLight::draw(glm::mat4 & projection, glm::mat4 & view, Shader & shader)
 {
 	shader.use();
 	shader.setMat4("projection", projection);
@@ -56,32 +56,32 @@ void Light::draw(glm::mat4 & projection, glm::mat4 & view, Shader & shader)
 	glDrawElements(GL_TRIANGLES, (GLsizei)this->indices.size() * 3, GL_UNSIGNED_INT, 0);
 }
 
-void Light::up() {
+void EntLight::up() {
 	this->position.y = this->position.y += 0.01;
 }
 
-void Light::down() {
+void EntLight::down() {
 	this->position.y = this->position.y -= 0.01;
 }
 
-void Light::forward() {
+void EntLight::forward() {
 	this->position.z = this->position.z += 0.01;
 }
 
-void Light::backward() {
+void EntLight::backward() {
 	this->position.z = this->position.z -= 0.01;
 }
 
-void Light::left() {
+void EntLight::left() {
 	this->position.x = this->position.x -= 0.01;
 }
 
-void Light::right() {
+void EntLight::right() {
 	this->position.x = this->position.x += 0.01;
 }
 
 
-void Light::createSphere(int stacks, int slices)
+void EntLight::createSphere(int stacks, int slices)
 {
 	const float PI = 3.14;
 

@@ -4,10 +4,10 @@
 #include "InitSystem.h"
 #include "CameraFreeLook.h"
 #include "Input.h"
-#include "Terrain.h"
+#include "EntTerrain.h"
 #include "Shader.h"
-#include "Light.h"
-#include "SkyBox.h"
+#include "EntLight.h"
+#include "EntSkyBox.h"
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -59,11 +59,11 @@ int main( int argc, char* args[] )
 	Shader skyboxShader			= Shader("shaders/skybox.vert", "shaders/skybox.frag");
 
     // Initializations
-	CameraFreeLook camera   = CameraFreeLook(SCREEN_WIDTH, SCREEN_HEIGHT);
-    Input input             = Input();
-    Terrain terrain         = Terrain();
-	Light light			    = Light();
-	SkyBox skybox			= SkyBox();
+	CameraFreeLook camera		= CameraFreeLook(SCREEN_WIDTH, SCREEN_HEIGHT);
+    Input input					= Input();
+	EntTerrain terrain          = EntTerrain();
+	EntLight light			    = EntLight();
+	EntSkyBox skybox			= EntSkyBox();
 
 	// Projection / View
 	glm::mat4 projection	= glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
@@ -74,7 +74,7 @@ int main( int argc, char* args[] )
     LOAD
     ------*/
 
-	terrain.load("assets/heightmap1025.pgm", "assets/diffuse1025.png");
+	terrain.load("assets/heightmap513.pgm", "assets/diffuse513.png");
 	light.load(glm::vec3(0,10,0));
 	skybox.load();
 

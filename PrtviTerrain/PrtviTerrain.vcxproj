@@ -127,12 +127,12 @@
     <ClCompile Include="InitSystem.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LdrStbiWrapper.cpp" />
-    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="EntLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="LdrPGM.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="SkyBox.cpp" />
-    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="EntSkyBox.cpp" />
+    <ClCompile Include="EntTerrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraFreeLook.h" />
@@ -140,12 +140,12 @@
     <ClInclude Include="InitSystem.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LdrStbiWrapper.h" />
-    <ClInclude Include="Light.h" />
+    <ClInclude Include="EntLight.h" />
     <ClInclude Include="LdrPGM.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="EntSkyBox.h" />
     <ClInclude Include="STImage.h" />
-    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="EntTerrain.h" />
     <ClInclude Include="STVertex.h" />
   </ItemGroup>
   <ItemGroup>
