@@ -54,6 +54,9 @@
     <ClCompile Include="EntLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RndrText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Heightmap.h">
@@ -92,6 +95,9 @@
     <ClInclude Include="EntLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RndrText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\flat_terrain.frag">
@@ -122,6 +128,12 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\skybox.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\text.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\text.vert">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
