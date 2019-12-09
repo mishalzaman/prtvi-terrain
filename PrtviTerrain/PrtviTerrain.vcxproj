@@ -89,7 +89,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2d.lib;SDL2maind.lib;glew32s.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2d.lib;SDL2maind.lib;glew32s.lib;glew32.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -130,6 +130,7 @@
     <ClCompile Include="EntLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="LdrPGM.cpp" />
+    <ClCompile Include="RndrText.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="EntSkyBox.cpp" />
     <ClCompile Include="EntTerrain.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="LdrStbiWrapper.h" />
     <ClInclude Include="EntLight.h" />
     <ClInclude Include="LdrPGM.h" />
+    <ClInclude Include="RndrText.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="EntSkyBox.h" />
     <ClInclude Include="STImage.h" />
@@ -159,6 +161,8 @@
     <None Include="shaders\terrain.vert" />
     <None Include="shaders\terrain_diffuse.frag" />
     <None Include="shaders\terrain_diffuse.vert" />
+    <None Include="shaders\text.frag" />
+    <None Include="shaders\text.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
