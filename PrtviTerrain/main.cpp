@@ -172,12 +172,9 @@ int main( int argc, char* args[] )
 			light.draw(projection, view, lightShader);
 			skybox.draw(projection, view, skyboxShader);
 
-			// Fix the culling issue
-			initSystem.enableCulling(false);
 			text.renderText(textShader, "Framerate: "+std::to_string(deltaTime), 25.0f, 25.0f, 1.0f, glm::vec3(1, 1, 1));
 			glm::vec3 cPos = camera.getCameraPosition();
 			text.renderText(textShader, "Camera: x" + std::to_string(cPos.x) + " y: " + std::to_string(cPos.y) + " z: " + std::to_string(cPos.x), 25.0f, 50.0f, 1.0f, glm::vec3(1, 1, 1));
-			initSystem.enableCulling(true);
 
             SDL_GL_SwapWindow(window);
         } else {
