@@ -19,8 +19,8 @@ class EntTerrain
     public:
 		EntTerrain();
         ~EntTerrain();
-		bool load(const char* heightmapFilename, const char* diffusemapFilename);
-        void draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition);
+		bool load(const char * heightmapFilename, const char * diffusemapFilename, const char * normalmapFilename);
+        void draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition, glm::vec3 viewPos);
 		void increaseHeightScale();
 		void decreaseHeightScale();
     private:
@@ -42,6 +42,11 @@ class EntTerrain
 		unsigned char* diffusemapData;
 		unsigned int diffuseTexture;
 		bool loadDiffuseMap(const char* filename);
+
+		// normal map
+		unsigned char* normalmapData;
+		unsigned int normalmapTexture;
+		bool loadNormalMap(const char* filename);
 };
 
 #endif TERRAIN_H

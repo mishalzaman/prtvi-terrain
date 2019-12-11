@@ -83,6 +83,33 @@ void Heightmap::normals(std::vector<STVertex> &mesh, std::vector<glm::uvec3> &in
 		mesh[indices[i].x].normal += normal;
 		mesh[indices[i].y].normal += normal;
 		mesh[indices[i].z].normal += normal;
+
+		// tangent
+		glm::vec2 deltaUv1 = mesh[indices[i].z].texture - mesh[indices[i].y].texture;
+		glm::vec2 deltaUv2 = mesh[indices[i].z].texture - mesh[indices[i].x].texture;
+
+		float f = 1.0f / (deltaUv1.x * deltaUv2.y - deltaUv2.x * deltaUv1.y);
+
+		glm::vec3 tangent;
+		tangent.z = f * (deltaUv2.y * edge1.x - deltaUv1.y * edge2.x);
+		tangent.y = f * (deltaUv2.y * edge1.y - deltaUv1.y * edge2.y);
+		tangent.x = f * (deltaUv2.y * edge1.z - deltaUv1.y * edge2.z);
+		tangent = glm::normalize(tangent);
+
+		mesh[indices[i].x].tangent += tangent;
+		mesh[indices[i].y].tangent += tangent;
+		mesh[indices[i].z].tangent += tangent;
+
+		// bitangent
+		glm::vec3 bitangent;
+		bitangent.z = f * (-deltaUv2.x * edge1.x + deltaUv1.x * edge2.x);
+		bitangent.y = f * (-deltaUv2.x * edge1.y + deltaUv1.x * edge2.y);
+		bitangent.x = f * (-deltaUv2.x * edge1.z + deltaUv1.x * edge2.z);
+		bitangent = glm::normalize(bitangent);
+
+		mesh[indices[i].x].bitangent += bitangent;
+		mesh[indices[i].y].bitangent += bitangent;
+		mesh[indices[i].z].bitangent += bitangent;
 	}
 }
 

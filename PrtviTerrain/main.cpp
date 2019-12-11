@@ -56,6 +56,7 @@ int main( int argc, char* args[] )
 	// SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 
 	// Shaders
+	Shader terrainNormalsShader = Shader("shaders/terrain_normals.vert", "shaders/terrain_normals.frag");
 	Shader terrainShader		= Shader("shaders/terrain.vert", "shaders/terrain.frag");
 	Shader terrainDiffuseShader = Shader("shaders/terrain_diffuse.vert", "shaders/terrain_diffuse.frag");
 	Shader lightShader			= Shader("shaders/light.vert", "shaders/light.frag");
@@ -79,8 +80,8 @@ int main( int argc, char* args[] )
     LOAD
     ------*/
 
-	terrain.load("assets/heightmap513.pgm", "assets/diffuse513.png");
-	light.load(glm::vec3(0,10,0));
+	terrain.load("assets/heightmap513.pgm", "assets/diffuse513.png", "assets/normal513.png");
+	light.load(glm::vec3(0,5,0));
 	skybox.load();
 	text.load(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -168,16 +169,13 @@ int main( int argc, char* args[] )
 
 			glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
 
-            terrain.draw(projection, view, terrainDiffuseShader, light.position);
+            terrain.draw(projection, view, terrainNormalsShader, light.position, camera.getCameraPosition());
 			light.draw(projection, view, lightShader);
 			skybox.draw(projection, view, skyboxShader);
 
-			// Fix the culling issue
-			initSystem.enableCulling(false);
 			text.renderText(textShader, "Framerate: "+std::to_string(deltaTime), 25.0f, 25.0f, 1.0f, glm::vec3(1, 1, 1));
 			glm::vec3 cPos = camera.getCameraPosition();
 			text.renderText(textShader, "Camera: x" + std::to_string(cPos.x) + " y: " + std::to_string(cPos.y) + " z: " + std::to_string(cPos.x), 25.0f, 50.0f, 1.0f, glm::vec3(1, 1, 1));
-			initSystem.enableCulling(true);
 
             SDL_GL_SwapWindow(window);
         } else {

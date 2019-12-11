@@ -109,12 +109,14 @@ void RndrText::renderText(Shader &s, std::string text, GLfloat x, GLfloat y, GLf
 		// Update VBO for each character
 		GLfloat vertices[6][4] = {
 			{ xpos,     ypos + h,   0.0, 0.0 },
-			{ xpos,     ypos,       0.0, 1.0 },
 			{ xpos + w, ypos,       1.0, 1.0 },
+			{ xpos,     ypos,       0.0, 1.0 },
+			
 
 			{ xpos,     ypos + h,   0.0, 0.0 },
-			{ xpos + w, ypos,       1.0, 1.0 },
-			{ xpos + w, ypos + h,   1.0, 0.0 }
+			{ xpos + w, ypos + h,   1.0, 0.0 },
+			{ xpos + w, ypos,       1.0, 1.0 }
+			
 		};
 		// Render glyph texture over quad
 		glBindTexture(GL_TEXTURE_2D, ch.TextureID);

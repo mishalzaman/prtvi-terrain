@@ -69,7 +69,8 @@ void InitSystem::enableCulling(bool state)
 	if (state == true)
 	{
 		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT);
+		glCullFace(GL_BACK);
+		glFrontFace(GL_CW);
 
 		return;
 	}
