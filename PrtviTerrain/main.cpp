@@ -157,8 +157,6 @@ int main( int argc, char* args[] )
 
             if (input.isQuit()) { quit = true; }
 
-             // printf("%f\n", deltaTime);
-
             /*------
             RENDER
             ------*/
