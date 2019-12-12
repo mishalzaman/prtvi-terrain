@@ -83,6 +83,29 @@ void Heightmap::normals(std::vector<STVertex> &mesh, std::vector<glm::uvec3> &in
 		mesh[indices[i].x].normal += normal;
 		mesh[indices[i].y].normal += normal;
 		mesh[indices[i].z].normal += normal;
+
+		// tangent and bitangent
+		// https://www.youtube.com/watch?v=0QhR7WSoF78&t=237s
+
+		glm::vec2 uv1 = mesh[indices[i].z].texture;
+		glm::vec2 uv2 = mesh[indices[i].y].texture;
+		glm::vec2 uv3 = mesh[indices[i].x].texture;
+
+		glm::vec2 deltaUv1 = uv1 - uv2;
+		glm::vec2 deltaUv2 = uv1 - uv3;
+
+		float r = 1 / (deltaUv1.x * deltaUv2.y - deltaUv1.y * deltaUv2.x);
+
+		glm::vec3 tangent = r * (edge1 * deltaUv2.y - edge2 * deltaUv1.y);
+		glm::vec3 bitangent = r * (edge2 * deltaUv1.x - edge1 * deltaUv2.x);
+
+		mesh[indices[i].z].tangent = glm::cross(bitangent, normal);
+		mesh[indices[i].y].tangent = glm::cross(bitangent, normal);
+		mesh[indices[i].x].tangent = glm::cross(bitangent, normal);
+
+		mesh[indices[i].z].bitangent = glm::cross(tangent, normal);
+		mesh[indices[i].y].bitangent = glm::cross(tangent, normal);
+		mesh[indices[i].x].bitangent = glm::cross(tangent, normal);
 	}
 }
 

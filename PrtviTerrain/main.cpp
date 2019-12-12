@@ -58,6 +58,7 @@ int main( int argc, char* args[] )
 	// Shaders
 	Shader terrainShader		= Shader("shaders/terrain.vert", "shaders/terrain.frag");
 	Shader terrainDiffuseShader = Shader("shaders/terrain_diffuse.vert", "shaders/terrain_diffuse.frag");
+	Shader normalsShader		= Shader("shaders/normals.vert", "shaders/normals.frag", "shaders/normals.geo");
 	Shader lightShader			= Shader("shaders/light.vert", "shaders/light.frag");
 	Shader skyboxShader			= Shader("shaders/skybox.vert", "shaders/skybox.frag");
 	Shader textShader			= Shader("shaders/text.vert", "shaders/text.frag");
@@ -167,6 +168,7 @@ int main( int argc, char* args[] )
 			glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
 
             terrain.draw(projection, view, terrainDiffuseShader, light.position);
+			terrain.draw(projection, view, normalsShader, light.position);
 			light.draw(projection, view, lightShader);
 			skybox.draw(projection, view, skyboxShader);
 
