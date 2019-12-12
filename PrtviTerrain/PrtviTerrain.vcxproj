@@ -155,6 +155,9 @@
     <None Include="shaders\flat_terrain.vert" />
     <None Include="shaders\light.frag" />
     <None Include="shaders\light.vert" />
+    <None Include="shaders\normals.frag" />
+    <None Include="shaders\normals.geo" />
+    <None Include="shaders\normals.vert" />
     <None Include="shaders\skybox.frag" />
     <None Include="shaders\skybox.vert" />
     <None Include="shaders\terrain.frag" />

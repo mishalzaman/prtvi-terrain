@@ -98,6 +98,14 @@ void EntTerrain::vertexBuffers() {
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(STVertex), (void*)offsetof(STVertex, texture));
 	glEnableVertexAttribArray(2);
 
+	// tangent
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(STVertex), (void*)offsetof(STVertex, tangent));
+	glEnableVertexAttribArray(3);
+
+	// bitangent
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(STVertex), (void*)offsetof(STVertex, bitangent));
+	glEnableVertexAttribArray(4);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindVertexArray(0);

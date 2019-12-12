@@ -136,5 +136,14 @@
     <None Include="shaders\text.vert">
       <Filter>shaders</Filter>
     </None>
+    <None Include="shaders\normals.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\normals.geo">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\normals.vert">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
