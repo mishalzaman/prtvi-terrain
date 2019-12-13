@@ -25,6 +25,7 @@ void Input::update(float deltaTime)
 			if (event.key.keysym.sym == SDLK_p && event.key.repeat == 0) { this->p = true; }
 			if (event.key.keysym.sym == SDLK_z && event.key.repeat == 0) { this->z = true; }
 			if (event.key.keysym.sym == SDLK_x && event.key.repeat == 0) { this->x = true; }
+			if (event.key.keysym.sym == SDLK_l && event.key.repeat == 0) { this->l = true; }
 			// arrow keys
 			if (event.key.keysym.sym == SDLK_UP && event.key.repeat == 0) { this->upArrow = true; }
 			if (event.key.keysym.sym == SDLK_DOWN && event.key.repeat == 0) { this->downArrow = true; }
@@ -46,6 +47,7 @@ void Input::update(float deltaTime)
 			if (event.key.keysym.sym == SDLK_p && event.key.repeat == 0) { this->p = false; }
 			if (event.key.keysym.sym == SDLK_z && event.key.repeat == 0) { this->z = false; }
 			if (event.key.keysym.sym == SDLK_x && event.key.repeat == 0) { this->x = false; }
+			if (event.key.keysym.sym == SDLK_l && event.key.repeat == 0) { this->l = false; }
 			// arrow keys
 			if (event.key.keysym.sym == SDLK_UP && event.key.repeat == 0) { this->upArrow = false; }
 			if (event.key.keysym.sym == SDLK_DOWN && event.key.repeat == 0) { this->downArrow = false; }
@@ -72,6 +74,7 @@ bool Input::isO() { return this->o; }
 bool Input::isP() { return this->p; }
 bool Input::isZ() { return this->z; }
 bool Input::isX() { return this->x; }
+bool Input::isL() { return this->l; }
 bool Input::isUpArrow() { return this->upArrow; }
 bool Input::isDownArrow() { return this->downArrow; }
 bool Input::isLeftArrow() { return this->leftArrow; }

@@ -29,6 +29,7 @@ float deltaTime, lastTime    = 0.0f;
 float previous_timestep      = SDL_GetTicks();
 bool quit                    = false;
 bool mouseLook               = false;
+bool showNormals			 = false;
 
 int main( int argc, char* args[] )
 {
@@ -146,8 +147,11 @@ int main( int argc, char* args[] )
 				light.right();
 			} else if (input.isUpArrow()) {
 				light.up();
-			} else if (input.isDownArrow() ) {
+			}
+			else if (input.isDownArrow()) {
 				light.down();
+			} else if (input.isL()) {
+				showNormals = !showNormals;
 			} else {
                 initSystem.enableMouseCursor(true);
 
@@ -168,7 +172,11 @@ int main( int argc, char* args[] )
 			glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
 
             terrain.draw(projection, view, terrainDiffuseShader, light.position);
-			terrain.draw(projection, view, normalsShader, light.position);
+
+			if (showNormals) {
+				terrain.draw(projection, view, normalsShader, light.position);
+			}
+			
 			light.draw(projection, view, lightShader);
 			skybox.draw(projection, view, skyboxShader);
 

@@ -20,6 +20,7 @@ public:
 	bool isP();
 	bool isZ();
 	bool isX();
+	bool isL();
 	bool isUpArrow();
 	bool isDownArrow();
 	bool isLeftArrow();
@@ -38,6 +39,7 @@ private:
 	bool p = false;
 	bool x = false;
 	bool z = false;
+	bool l = false;
 	bool upArrow = false;
 	bool downArrow = false;
 	bool leftArrow = false;
