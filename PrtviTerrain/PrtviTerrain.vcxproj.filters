@@ -51,9 +51,6 @@
     <ClCompile Include="LdrStbiWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EntTerrain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EntSkyBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -68,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="engine\OGLGenVertexAttrbitutes.cpp">
       <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\Terrain.cpp">
+      <Filter>entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +98,6 @@
     <ClInclude Include="LdrStbiWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntTerrain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EntSkyBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -115,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="engine\OGLGenVertexAttrbitutes.h">
       <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\Terrain.h">
+      <Filter>entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

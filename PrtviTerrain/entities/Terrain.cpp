@@ -1,18 +1,18 @@
-#include "EntTerrain.h"
+#include "Terrain.h"
 #include <ctime>
 
-EntTerrain::EntTerrain()
+Terrain::Terrain()
 {
 	// setup model matrix
 	this->model = glm::translate(this->model, this->position);
 	this->model = glm::scale(this->model, this->scale);
 }
 
-EntTerrain::~EntTerrain() {
+Terrain::~Terrain() {
 
 }
 
-bool EntTerrain::load(const char * heightmapFilename, const char * diffusemapFilename)
+bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilename)
 {
 	std::clock_t begin = clock();
 	if (!LdrPGM::load(heightmapFilename, this->heightmapData))
@@ -31,7 +31,7 @@ bool EntTerrain::load(const char * heightmapFilename, const char * diffusemapFil
 	printf("Load normals duration: %f\n", duration);
 	
 	begin = clock();
-	this->vertexBuffers();
+	OglGenVertexAttributes::generate(this->VAO, this->VBO, this->mesh, this->indices, 4);
 	duration = (clock() - begin);
 	printf("Load VBO and VAO duration: %f\n", duration);
 
@@ -44,15 +44,15 @@ bool EntTerrain::load(const char * heightmapFilename, const char * diffusemapFil
 	return true;
 }
 
-void EntTerrain::increaseHeightScale() {
+void Terrain::increaseHeightScale() {
 	this->heightScale += 0.01f;
 }
 
-void EntTerrain::decreaseHeightScale() {
+void Terrain::decreaseHeightScale() {
 	this->heightScale -= 0.01f;
 }
 
-void EntTerrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition) {
+void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition) {
 	glBindTexture(GL_TEXTURE_2D, this->diffuseTexture);
 	shader.use();
     shader.setMat4("projection", projection);
@@ -71,47 +71,7 @@ void EntTerrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, gl
 	glDrawElements(GL_TRIANGLES, (GLsizei)this->indices.size() * 3, GL_UNSIGNED_INT, 0);
 }
 
-void EntTerrain::vertexBuffers() {
-    unsigned int IBO;
-
-	glGenVertexArrays(1, &this->VAO);
-	glGenBuffers(1, &this->VBO);
-	glGenBuffers(1, &IBO);
-	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-	glBindVertexArray(this->VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-	glBufferData(GL_ARRAY_BUFFER, this->mesh.size() * sizeof(STVertex), &this->mesh[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indices.size() * sizeof(glm::uvec3), glm::value_ptr(this->indices[0]), GL_STATIC_DRAW);
-
-	// positions
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(STVertex), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// normals
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(STVertex), (void*)offsetof(STVertex, normal));
-	glEnableVertexAttribArray(1);
-
-	// textures
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(STVertex), (void*)offsetof(STVertex, texture));
-	glEnableVertexAttribArray(2);
-
-	// tangent
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(STVertex), (void*)offsetof(STVertex, tangent));
-	glEnableVertexAttribArray(3);
-
-	// bitangent
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(STVertex), (void*)offsetof(STVertex, bitangent));
-	glEnableVertexAttribArray(4);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindVertexArray(0);
-}
-
-bool EntTerrain::loadDiffuseMap(const char* filename)
+bool Terrain::loadDiffuseMap(const char* filename)
 {
 	glGenTextures(1, &this->diffuseTexture);
 	glBindTexture(GL_TEXTURE_2D, this->diffuseTexture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object

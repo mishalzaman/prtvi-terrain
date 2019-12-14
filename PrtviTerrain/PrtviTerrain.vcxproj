@@ -125,6 +125,7 @@
     <ClCompile Include="CameraFreeLook.cpp" />
     <ClCompile Include="engine\OGLGenVertexAttrbitutes.cpp" />
     <ClCompile Include="engine\Sphere.cpp" />
+    <ClCompile Include="entities\Terrain.cpp" />
     <ClCompile Include="entities\Light.cpp" />
     <ClCompile Include="Heightmap.cpp" />
     <ClCompile Include="InitSystem.cpp" />
@@ -135,12 +136,12 @@
     <ClCompile Include="RndrText.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="EntSkyBox.cpp" />
-    <ClCompile Include="EntTerrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraFreeLook.h" />
     <ClInclude Include="engine\OGLGenVertexAttrbitutes.h" />
     <ClInclude Include="engine\Sphere.h" />
+    <ClInclude Include="entities\Terrain.h" />
     <ClInclude Include="entities\Light.h" />
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="InitSystem.h" />
@@ -151,7 +152,6 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="EntSkyBox.h" />
     <ClInclude Include="STImage.h" />
-    <ClInclude Include="EntTerrain.h" />
     <ClInclude Include="STVertex.h" />
   </ItemGroup>
   <ItemGroup>
