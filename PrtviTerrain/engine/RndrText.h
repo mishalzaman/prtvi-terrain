@@ -7,7 +7,7 @@
 #include <map>
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include "Shader.h"
+#include <Shader.h>
 
 struct Character {
 	GLuint     TextureID;  // ID handle of the glyph texture

@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\Engine\prtvi_terrain\PrtviTerrain\PrtviTerrain\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Engine\prtvi_terrain\PrtviTerrain\PrtviTerrain\structs;D:\Engine\prtvi_terrain\PrtviTerrain\PrtviTerrain\entities;D:\Engine\prtvi_terrain\PrtviTerrain\PrtviTerrain\engine;D:\Engine\prtvi_terrain\PrtviTerrain\PrtviTerrain\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Engine\prtvi_terrain\PrtviTerrain\PrtviTerrain\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -122,33 +122,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CameraFreeLook.cpp" />
-    <ClCompile Include="Heightmap.cpp" />
-    <ClCompile Include="InitSystem.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="LdrStbiWrapper.cpp" />
-    <ClCompile Include="EntLight.cpp" />
+    <ClCompile Include="engine\CameraFreeLook.cpp" />
+    <ClCompile Include="engine\Heightmap.cpp" />
+    <ClCompile Include="engine\Input.cpp" />
+    <ClCompile Include="engine\LdrPGM.cpp" />
+    <ClCompile Include="engine\OGLSystem.cpp" />
+    <ClCompile Include="engine\LdrStbiWrapper.cpp" />
+    <ClCompile Include="engine\OGLGenTexture.cpp" />
+    <ClCompile Include="engine\OGLGenVertexAttrbitutes.cpp" />
+    <ClCompile Include="engine\RndrText.cpp" />
+    <ClCompile Include="engine\Shader.cpp" />
+    <ClCompile Include="engine\Sphere.cpp" />
+    <ClCompile Include="entities\SkyBox.cpp" />
+    <ClCompile Include="entities\Terrain.cpp" />
+    <ClCompile Include="entities\Light.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="LdrPGM.cpp" />
-    <ClCompile Include="RndrText.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="EntSkyBox.cpp" />
-    <ClCompile Include="EntTerrain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraFreeLook.h" />
-    <ClInclude Include="Heightmap.h" />
-    <ClInclude Include="InitSystem.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="LdrStbiWrapper.h" />
-    <ClInclude Include="EntLight.h" />
-    <ClInclude Include="LdrPGM.h" />
-    <ClInclude Include="RndrText.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="EntSkyBox.h" />
-    <ClInclude Include="STImage.h" />
-    <ClInclude Include="EntTerrain.h" />
-    <ClInclude Include="STVertex.h" />
+    <ClInclude Include="engine\CameraFreeLook.h" />
+    <ClInclude Include="engine\Heightmap.h" />
+    <ClInclude Include="engine\Input.h" />
+    <ClInclude Include="engine\LdrPGM.h" />
+    <ClInclude Include="engine\OGLSystem.h" />
+    <ClInclude Include="engine\LdrStbiWrapper.h" />
+    <ClInclude Include="engine\OGLGenTexture.h" />
+    <ClInclude Include="engine\OGLGenVertexAttrbitutes.h" />
+    <ClInclude Include="engine\RndrText.h" />
+    <ClInclude Include="engine\Shader.h" />
+    <ClInclude Include="engine\Sphere.h" />
+    <ClInclude Include="entities\SkyBox.h" />
+    <ClInclude Include="entities\Light.h" />
+    <ClInclude Include="entities\Terrain.h" />
+    <ClInclude Include="structs\STImage.h" />
+    <ClInclude Include="structs\STVertex.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\flat_terrain.frag" />

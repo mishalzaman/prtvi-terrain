@@ -1,16 +1,16 @@
-#include "InitSystem.h"
+#include "OGLSystem.h"
 
 using namespace std;
 
-InitSystem::InitSystem() {
+OGLSystem::OGLSystem() {
 
 }
 
-InitSystem::~InitSystem() {
+OGLSystem::~OGLSystem() {
 
 }
 
-int InitSystem::initialize(SDL_Window*& window, SDL_GLContext& context, int width, int height, int major, int minor) {
+int OGLSystem::initialize(SDL_Window*& window, SDL_GLContext& context, int width, int height, int major, int minor) {
 	if (!sdlInit()) {
 		return this->ERROR_SDL_INIT;
 	}
@@ -33,38 +33,38 @@ int InitSystem::initialize(SDL_Window*& window, SDL_GLContext& context, int widt
 	return 0;
 }
 
-void InitSystem::deInitialize(SDL_Window* &window, SDL_GLContext &context) {
+void OGLSystem::deInitialize(SDL_Window* &window, SDL_GLContext &context) {
     cout << "shutting down system" << endl;
     SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
 
-void InitSystem::enableDepthTest(bool state) {
+void OGLSystem::enableDepthTest(bool state) {
 	state ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
 }
 
-void InitSystem::enableMouseCapture(bool state)
+void OGLSystem::enableMouseCapture(bool state)
 {
 	state ? SDL_CaptureMouse(SDL_TRUE) : SDL_CaptureMouse(SDL_FALSE);
 }
 
-void InitSystem::enableMouseCursor(bool state)
+void OGLSystem::enableMouseCursor(bool state)
 {
 	state ? SDL_ShowCursor(1) : SDL_ShowCursor(0);
 }
 
-void InitSystem::centerMouse(SDL_Window* window, unsigned int width, unsigned int height)
+void OGLSystem::centerMouse(SDL_Window* window, unsigned int width, unsigned int height)
 {
 	SDL_WarpMouseInWindow(window, width / 2.0f, height / 2.0f);
 }
 
-void InitSystem::enableWireframe(bool state)
+void OGLSystem::enableWireframe(bool state)
 {
 	state ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-void InitSystem::enableCulling(bool state)
+void OGLSystem::enableCulling(bool state)
 {
 	if (state == true)
 	{
@@ -78,14 +78,14 @@ void InitSystem::enableCulling(bool state)
 	glDisable(GL_CULL_FACE);
 }
 
-bool InitSystem::sdlInit() {
+bool OGLSystem::sdlInit() {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		return false;
 	}
     return true;
 }
 
-bool InitSystem::createWindow(SDL_Window*& window, int width, int height) {
+bool OGLSystem::createWindow(SDL_Window*& window, int width, int height) {
     window = SDL_CreateWindow(
 		"Test SDl2 and Glew",
 		SDL_WINDOWPOS_CENTERED,
@@ -101,7 +101,7 @@ bool InitSystem::createWindow(SDL_Window*& window, int width, int height) {
     return true;
 }
 
-bool InitSystem::createContext(SDL_GLContext &context, SDL_Window* &window) {
+bool OGLSystem::createContext(SDL_GLContext &context, SDL_Window* &window) {
     context = SDL_GL_CreateContext(window);
 
     if (!context) {
@@ -110,11 +110,11 @@ bool InitSystem::createContext(SDL_GLContext &context, SDL_Window* &window) {
     return true;
 }
 
-void InitSystem::setGlewExperimental(bool state) {
+void OGLSystem::setGlewExperimental(bool state) {
     glewExperimental = GL_TRUE;
 }
 
-bool InitSystem::initializeGlew() {
+bool OGLSystem::initializeGlew() {
     GLenum err = glewInit();
 
 	if (err) {
@@ -123,7 +123,7 @@ bool InitSystem::initializeGlew() {
     return true;
 }
 
-void InitSystem::setGlAttributes(int major, int minor) {
+void OGLSystem::setGlAttributes(int major, int minor) {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, major);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minor);

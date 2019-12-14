@@ -1,18 +1,20 @@
-#ifndef ENT_LIGHT_H
-#define ENT_LIGHT_H
+#ifndef LIGHT_H
+#define LIGHT_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "Shader.h"
+#include <Shader.h>
 #include <vector>
-#include "STVertex.h"
+#include <STVertex.h>
+#include <Sphere.h>
+#include <OGLGenVertexAttrbitutes.h>
 
-class EntLight
+class Light
 {
 public:
-	EntLight();
-	~EntLight();
+	Light();
+	~Light();
 	void load(glm::vec3 position);
 	void draw(glm::mat4& projection, glm::mat4& view, Shader& shader);
 	glm::vec3 position = glm::vec3(0, 0, 0);
@@ -27,7 +29,6 @@ private:
 	unsigned int VBO;
 	std::vector<STVertex> mesh;
 	std::vector<glm::uvec3> indices;
-	void createSphere(int stacks, int slices);
 };
 
 #endif

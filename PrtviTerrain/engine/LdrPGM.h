@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "STImage.h"
+#include <STImage.h>
 
 namespace LdrPGM {
 	struct Image {

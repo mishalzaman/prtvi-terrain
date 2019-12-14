@@ -6,11 +6,11 @@
 #include <string>
 #include <iostream>
 
-class InitSystem
+class OGLSystem
 {
     public:
-        InitSystem();
-        ~InitSystem();
+		OGLSystem();
+        ~OGLSystem();
         int initialize(SDL_Window* &window, SDL_GLContext &context, int width, int height, int major, int minor);
         void deInitialize(SDL_Window* &window, SDL_GLContext & context);
 

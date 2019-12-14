@@ -1,18 +1,19 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
-#include <iostream>
-#include "InitSystem.h"
-#include "CameraFreeLook.h"
-#include "Input.h"
-#include "EntTerrain.h"
-#include "Shader.h"
-#include "EntLight.h"
-#include "EntSkyBox.h"
-#include "RndrText.h"
-#include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <iostream>
+#include <OGLSystem.h>
+#include <CameraFreeLook.h>
+#include <Input.h>
+#include <Shader.h>
+#include <Light.h>
+#include <SkyBox.h>
+#include <Terrain.h>
+#include <RndrText.h>
+#include <string>
+
 #include <vector>
 
 using namespace std;
@@ -22,7 +23,7 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 SDL_Window* window;
 SDL_GLContext context;
-InitSystem initSystem = InitSystem();
+OGLSystem oglSystem = OGLSystem();
 const int MINIMUM_FPS_FRAME  = 6;                           
 float minimum_fps_delta_time = 1000 / MINIMUM_FPS_FRAME;
 float deltaTime, lastTime    = 0.0f;
@@ -33,7 +34,7 @@ bool showNormals			 = false;
 
 int main( int argc, char* args[] )
 {
-	int iSError = initSystem.initialize(
+	int iSError = oglSystem.initialize(
 		window, 
 		context, 
 		SCREEN_WIDTH, 
@@ -47,12 +48,12 @@ int main( int argc, char* args[] )
 	}
 
     // OpenGL options
-    initSystem.enableDepthTest(true);
-    initSystem.enableMouseCursor(true);
-    initSystem.enableMouseCapture(true);
-    initSystem.centerMouse(window, SCREEN_WIDTH, SCREEN_HEIGHT);
-    initSystem.enableWireframe(false);
-    initSystem.enableCulling(true); 
+	oglSystem.enableDepthTest(true);
+	oglSystem.enableMouseCursor(true);
+	oglSystem.enableMouseCapture(true);
+	oglSystem.centerMouse(window, SCREEN_WIDTH, SCREEN_HEIGHT);
+	oglSystem.enableWireframe(false);
+	oglSystem.enableCulling(true);
 
 	// SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 
@@ -67,9 +68,9 @@ int main( int argc, char* args[] )
     // Initializations
 	CameraFreeLook camera		= CameraFreeLook(SCREEN_WIDTH, SCREEN_HEIGHT);
     Input input					= Input();
-	EntTerrain terrain          = EntTerrain();
-	EntLight light			    = EntLight();
-	EntSkyBox skybox			= EntSkyBox();
+	Terrain terrain             = Terrain();
+	Light light			        = Light();
+	SkyBox skybox			    = SkyBox();
 	RndrText text				= RndrText();
 
 	// Projection / View
@@ -109,7 +110,7 @@ int main( int argc, char* args[] )
             input.update(deltaTime);
 
 			if (input.isLShift()) {
-				initSystem.enableMouseCursor(false);
+				oglSystem.enableMouseCursor(false);
 
 				if (!mouseLook) {
 					SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
@@ -137,10 +138,10 @@ int main( int argc, char* args[] )
 			} else if (input.isX()) {
 				terrain.decreaseHeightScale();
 			} else if (input.isP()) {
-				initSystem.enableWireframe(true);
+				oglSystem.enableWireframe(true);
 			}
 			else if (input.isO()) {
-				initSystem.enableWireframe(false);
+				oglSystem.enableWireframe(false);
 			} else if (input.isLeftArrow()) {
 				light.left();
 			} else if (input.isRightArrow()) {
@@ -153,7 +154,7 @@ int main( int argc, char* args[] )
 			} else if (input.isL()) {
 				showNormals = !showNormals;
 			} else {
-                initSystem.enableMouseCursor(true);
+				oglSystem.enableMouseCursor(true);
 
                 if (mouseLook) {
                     mouseLook = false;
@@ -190,7 +191,7 @@ int main( int argc, char* args[] )
         }
     }
 	
-	initSystem.deInitialize(window, context);
+	oglSystem.deInitialize(window, context);
 
 	cout << "successful exit";
 	return 0;

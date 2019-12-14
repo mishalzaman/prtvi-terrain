@@ -1,19 +1,19 @@
-#ifndef ENT_SKYBOX_H
-#define ENT_SKYBOX_H
+#ifndef SKYBOX_H
+#define SKYBOX_H
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <vector>
 #include <iostream>
 #include <string>
-#include "Shader.h"
-#include "LdrStbiWrapper.h"
+#include <Shader.h>
+#include <LdrStbiWrapper.h>
 
-class EntSkyBox
+class SkyBox
 {
 public:
-	EntSkyBox();
-	~EntSkyBox();
+	SkyBox();
+	~SkyBox();
 	void load();
 	void draw(glm::mat4& projection, glm::mat4& view, Shader& shader);
 private:
