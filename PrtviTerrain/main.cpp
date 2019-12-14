@@ -1,18 +1,19 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <OGLSystem.h>
 #include <CameraFreeLook.h>
 #include <Input.h>
-#include <Terrain.h>
-#include "Shader.h"
+#include <Shader.h>
 #include <Light.h>
 #include <SkyBox.h>
+#include <Terrain.h>
 #include <RndrText.h>
 #include <string>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+
 #include <vector>
 
 using namespace std;
