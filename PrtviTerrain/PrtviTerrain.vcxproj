@@ -123,11 +123,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CameraFreeLook.cpp" />
+    <ClCompile Include="engine\OGLGenVertexAttrbitutes.cpp" />
+    <ClCompile Include="engine\Sphere.cpp" />
+    <ClCompile Include="entities\Light.cpp" />
     <ClCompile Include="Heightmap.cpp" />
     <ClCompile Include="InitSystem.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LdrStbiWrapper.cpp" />
-    <ClCompile Include="EntLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="LdrPGM.cpp" />
     <ClCompile Include="RndrText.cpp" />
@@ -137,11 +139,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraFreeLook.h" />
+    <ClInclude Include="engine\OGLGenVertexAttrbitutes.h" />
+    <ClInclude Include="engine\Sphere.h" />
+    <ClInclude Include="entities\Light.h" />
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="InitSystem.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LdrStbiWrapper.h" />
-    <ClInclude Include="EntLight.h" />
     <ClInclude Include="LdrPGM.h" />
     <ClInclude Include="RndrText.h" />
     <ClInclude Include="Shader.h" />

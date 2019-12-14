@@ -6,7 +6,7 @@
 #include "Input.h"
 #include "EntTerrain.h"
 #include "Shader.h"
-#include "EntLight.h"
+#include "entities/Light.h"
 #include "EntSkyBox.h"
 #include "RndrText.h"
 #include <string>
@@ -68,7 +68,7 @@ int main( int argc, char* args[] )
 	CameraFreeLook camera		= CameraFreeLook(SCREEN_WIDTH, SCREEN_HEIGHT);
     Input input					= Input();
 	EntTerrain terrain          = EntTerrain();
-	EntLight light			    = EntLight();
+	Light light			        = Light();
 	EntSkyBox skybox			= EntSkyBox();
 	RndrText text				= RndrText();
 

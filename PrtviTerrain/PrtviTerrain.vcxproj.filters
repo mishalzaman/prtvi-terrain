@@ -19,6 +19,12 @@
     <Filter Include="structs">
       <UniqueIdentifier>{2a28263b-3537-444d-8dd5-47cd022923b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="entities">
+      <UniqueIdentifier>{7e68a5f8-b188-46b4-a562-a994d8e1705b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{fd621a17-30dc-4caf-b6d5-3cc6a46a8231}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Heightmap.cpp">
@@ -51,11 +57,17 @@
     <ClCompile Include="EntSkyBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EntLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RndrText.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\Light.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Sphere.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\OGLGenVertexAttrbitutes.cpp">
+      <Filter>engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,11 +104,17 @@
     <ClInclude Include="EntSkyBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RndrText.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\Light.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Sphere.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\OGLGenVertexAttrbitutes.h">
+      <Filter>engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
