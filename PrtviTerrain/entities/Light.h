@@ -4,11 +4,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "../Shader.h"
+#include <Shader.h>
 #include <vector>
-#include "../STVertex.h"
-#include "../engine/Sphere.h"
-#include "../engine/OGLGenVertexAttrbitutes.h"
+#include <STVertex.h>
+#include <Sphere.h>
+#include <OGLGenVertexAttrbitutes.h>
 
 class Light
 {

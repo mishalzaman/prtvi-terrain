@@ -5,14 +5,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
-#include "../Heightmap.h"
-#include "../Shader.h"
+#include <Heightmap.h>
+#include <Shader.h>
 #include <iostream>
-#include "../STVertex.h"
-#include "../STImage.h"
-#include "../LdrStbiWrapper.h"
-#include "../engine/OGLGenVertexAttrbitutes.h"
-#include "../engine/OGLGenTexture.h"
+#include <STVertex.h>
+#include <STImage.h>
+#include <OGLGenVertexAttrbitutes.h>
+#include <OGLGenTexture.h>
 
 using namespace std;
 

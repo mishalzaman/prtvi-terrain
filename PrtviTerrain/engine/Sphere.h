@@ -1,7 +1,7 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "../STVertex.h"
+#include <STVertex.h>
 #include <vector>
 
 namespace Sphere {

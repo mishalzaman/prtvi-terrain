@@ -1,6 +1,6 @@
 #include "OGLGenTexture.h"
 
-void OglGenTexture::generate(std::vector<const char*> filenames, GLuint & textureID, int & width, int & height, int & nrChannels)
+void OglGenTexture::cubemap(std::vector<const char*> filenames, GLuint & textureID, int & width, int & height, int & nrChannels)
 {
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);

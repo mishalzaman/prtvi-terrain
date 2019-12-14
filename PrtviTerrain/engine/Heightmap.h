@@ -5,9 +5,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
 #include <iostream>
-#include "STVertex.h"
-#include "STImage.h"
-#include "LdrPGM.h"
+#include <STVertex.h>
+#include <STImage.h>
+#include <LdrPGM.h>
 
 using namespace std;
 

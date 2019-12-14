@@ -5,56 +5,21 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="shaders">
       <UniqueIdentifier>{5af434fd-e1b3-4cc3-8a91-7283d404c96a}</UniqueIdentifier>
     </Filter>
     <Filter Include="structs">
       <UniqueIdentifier>{2a28263b-3537-444d-8dd5-47cd022923b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="entities">
-      <UniqueIdentifier>{7e68a5f8-b188-46b4-a562-a994d8e1705b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="engine">
       <UniqueIdentifier>{fd621a17-30dc-4caf-b6d5-3cc6a46a8231}</UniqueIdentifier>
     </Filter>
+    <Filter Include="entities">
+      <UniqueIdentifier>{7e68a5f8-b188-46b4-a562-a994d8e1705b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Heightmap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InitSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraFreeLook.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LdrPGM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LdrStbiWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntSkyBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RndrText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="entities\Light.cpp">
@@ -72,41 +37,35 @@
     <ClCompile Include="engine\OGLGenTexture.cpp">
       <Filter>engine</Filter>
     </ClCompile>
+    <ClCompile Include="engine\LdrStbiWrapper.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\SkyBox.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\CameraFreeLook.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\OGLSystem.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Heightmap.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Input.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\LdrPGM.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\RndrText.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Shader.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Heightmap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InitSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="STVertex.h">
-      <Filter>structs</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraFreeLook.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LdrPGM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="STImage.h">
-      <Filter>structs</Filter>
-    </ClInclude>
-    <ClInclude Include="LdrStbiWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EntSkyBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RndrText.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="entities\Light.h">
       <Filter>entities</Filter>
     </ClInclude>
@@ -116,11 +75,44 @@
     <ClInclude Include="engine\OGLGenVertexAttrbitutes.h">
       <Filter>engine</Filter>
     </ClInclude>
+    <ClInclude Include="engine\OGLGenTexture.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\LdrStbiWrapper.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\SkyBox.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\CameraFreeLook.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\OGLSystem.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Heightmap.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Input.h">
+      <Filter>engine</Filter>
+    </ClInclude>
     <ClInclude Include="entities\Terrain.h">
       <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="engine\OGLGenTexture.h">
+    <ClInclude Include="engine\LdrPGM.h">
       <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\RndrText.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Shader.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="structs\STImage.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="structs\STVertex.h">
+      <Filter>structs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
