@@ -36,7 +36,7 @@ bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilena
 	printf("Load VBO and VAO duration: %f\n", duration);
 
 	begin = clock();
-	if (!this->loadDiffuseMap(diffusemapFilename))
+	if (OglGenTexture::bind2dNearest(diffusemapFilename, diffuseTextureID))
 		return false;
 	duration = (clock() - begin);
 	printf("Load diffuse map duration: %f\n", duration);
@@ -53,7 +53,7 @@ void Terrain::decreaseHeightScale() {
 }
 
 void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition) {
-	glBindTexture(GL_TEXTURE_2D, this->diffuseTexture);
+	glBindTexture(GL_TEXTURE_2D, this->diffuseTextureID);
 	shader.use();
     shader.setMat4("projection", projection);
     shader.setMat4("view", view);
@@ -69,33 +69,4 @@ void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::
 	shader.setVec3("objectColor", glm::vec3(0.6f, 0.6f, 0.6f));
 
 	glDrawElements(GL_TRIANGLES, (GLsizei)this->indices.size() * 3, GL_UNSIGNED_INT, 0);
-}
-
-bool Terrain::loadDiffuseMap(const char* filename)
-{
-	glGenTextures(1, &this->diffuseTexture);
-	glBindTexture(GL_TEXTURE_2D, this->diffuseTexture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-	// load image, create texture and generate mipmaps
-	int width, height, nrChannels;
-
-	this->diffusemapData = LdrStbiWrapper::load(filename, width, height, nrChannels, LdrStbiWrapper::STBI_rgb_alpha);
-	if (this->diffusemapData)
-	{
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->diffusemapData);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		LdrStbiWrapper::free(this->diffusemapData);
-		return true;
-	}
-	else
-	{
-		LdrStbiWrapper::free(this->diffusemapData);
-		return false;
-	}
 }

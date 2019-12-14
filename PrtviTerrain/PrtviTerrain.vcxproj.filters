@@ -69,6 +69,9 @@
     <ClCompile Include="entities\Terrain.cpp">
       <Filter>entities</Filter>
     </ClCompile>
+    <ClCompile Include="engine\OGLGenTexture.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Heightmap.h">
@@ -115,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="entities\Terrain.h">
       <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\OGLGenTexture.h">
+      <Filter>engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

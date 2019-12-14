@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CameraFreeLook.cpp" />
+    <ClCompile Include="engine\OGLGenTexture.cpp" />
     <ClCompile Include="engine\OGLGenVertexAttrbitutes.cpp" />
     <ClCompile Include="engine\Sphere.cpp" />
     <ClCompile Include="entities\Terrain.cpp" />
@@ -139,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraFreeLook.h" />
+    <ClInclude Include="engine\OGLGenTexture.h" />
     <ClInclude Include="engine\OGLGenVertexAttrbitutes.h" />
     <ClInclude Include="engine\Sphere.h" />
     <ClInclude Include="entities\Terrain.h" />

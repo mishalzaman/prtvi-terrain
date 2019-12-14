@@ -12,6 +12,7 @@
 #include "../STImage.h"
 #include "../LdrStbiWrapper.h"
 #include "../engine/OGLGenVertexAttrbitutes.h"
+#include "../engine/OGLGenTexture.h"
 
 using namespace std;
 
@@ -39,9 +40,7 @@ class Terrain
 		float heightScale = 0.5f;
 
 		// diffuse map
-		unsigned char* diffusemapData;
-		unsigned int diffuseTexture;
-		bool loadDiffuseMap(const char* filename);
+		GLuint diffuseTextureID;
 };
 
 #endif TERRAIN_H
