@@ -28,8 +28,8 @@ void CameraFreeLook::mousePositionUpdate(float deltaTime, int x, int y)
 	xOffset *= this->mouseSensitivity;
 	yOffset *= this->mouseSensitivity;
 
-	this->yaw += xOffset;
-	this->pitch += yOffset;
+	this->yaw += xOffset * deltaTime;
+	this->pitch += yOffset * deltaTime;
 
 	if (this->pitch > 89.0f)
 		this->pitch = 89.0f;

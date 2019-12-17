@@ -13,8 +13,9 @@
 #include <Terrain.h>
 #include <RndrText.h>
 #include <string>
-
+#include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -24,10 +25,6 @@ const int SCREEN_HEIGHT = 720;
 SDL_Window* window;
 SDL_GLContext context;
 OGLSystem oglSystem = OGLSystem();
-const int MINIMUM_FPS_FRAME  = 6;                           
-float minimum_fps_delta_time = 1000 / MINIMUM_FPS_FRAME;
-float deltaTime, lastTime    = 0.0f;
-float previous_timestep      = SDL_GetTicks();
 bool quit                    = false;
 bool mouseLook               = false;
 bool showNormals			 = false;
@@ -87,27 +84,34 @@ int main( int argc, char* args[] )
 	skybox.load();
 	text.load(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	/*--------
-	UPDATE
-	-------*/
+	// semi fixed timestep
+	// https://gafferongames.com/post/fix_your_timestep/
 
+	double t = 0.0;
+	double dt = 1 / 60.0;
+
+	double currentTime = SDL_GetTicks();
+	double accumulator = 0.0;
+	double numFrames = 0;
+	double framesMS = 0.0;
+		
     while (!quit)
     {
-        float current_timestep = SDL_GetTicks();
+		double newTime = SDL_GetTicks();
+		double frameTime = newTime - currentTime;
+		if (frameTime > 0.25) {
+			frameTime = 0.25;
+		}
 
-        if (previous_timestep < current_timestep) {
-            float deltaTime = current_timestep - previous_timestep;
+		currentTime = newTime;
+		accumulator += frameTime;
 
-			if (deltaTime > minimum_fps_delta_time) {
-				deltaTime = minimum_fps_delta_time; // slow down if the computer is too slow
-			}
-            previous_timestep = current_timestep;
+		while (accumulator >= dt) {
+			/*---------------------
+			INPUT / UPDATE PHYSICS
+			---------------------*/
 
-            /*------
-            INPUT
-            ------*/
-
-            input.update(deltaTime);
+			input.update(dt);
 
 			if (input.isLShift()) {
 				oglSystem.enableMouseCursor(false);
@@ -120,79 +124,108 @@ int main( int argc, char* args[] )
 					if (input.isMouseMotion()) {
 						int x, y;
 						SDL_GetMouseState(&x, &y);
-						camera.mousePositionUpdate(deltaTime, x, y);
+						camera.mousePositionUpdate(dt, x, y);
 						SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
 					}
 
 					view = camera.getViewMatrix();
 				}
 
-				if (input.isW()) { camera.forward(deltaTime); };
-				if (input.isS()) { camera.backward(deltaTime); };
-				if (input.isA()) { camera.strafeLeft(deltaTime); };
-				if (input.isD()) { camera.strafeRight(deltaTime); };
+				if (input.isW()) { camera.forward(dt); };
+				if (input.isS()) { camera.backward(dt); };
+				if (input.isA()) { camera.strafeLeft(dt); };
+				if (input.isD()) { camera.strafeRight(dt); };
 				if (input.isUpArrow()) { light.forward(); }
 				if (input.isDownArrow()) { light.backward(); }
-			} else if (input.isZ()){
+			}
+			else if (input.isZ()) {
 				terrain.increaseHeightScale();
-			} else if (input.isX()) {
+			}
+			else if (input.isX()) {
 				terrain.decreaseHeightScale();
-			} else if (input.isP()) {
+			}
+			else if (input.isP()) {
 				oglSystem.enableWireframe(true);
 			}
 			else if (input.isO()) {
 				oglSystem.enableWireframe(false);
-			} else if (input.isLeftArrow()) {
+			}
+			else if (input.isLeftArrow()) {
 				light.left();
-			} else if (input.isRightArrow()) {
+			}
+			else if (input.isRightArrow()) {
 				light.right();
-			} else if (input.isUpArrow()) {
+			}
+			else if (input.isUpArrow()) {
 				light.up();
 			}
 			else if (input.isDownArrow()) {
 				light.down();
-			} else if (input.isL()) {
+			}
+			else if (input.isL()) {
 				showNormals = !showNormals;
-			} else {
+			}
+			else {
 				oglSystem.enableMouseCursor(true);
 
-                if (mouseLook) {
-                    mouseLook = false;
-                }
-            }
-
-            if (input.isQuit()) { quit = true; }
-
-            /*------
-            RENDER
-            ------*/
-
-            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
-
-            terrain.draw(projection, view, terrainDiffuseShader, light.position);
-
-			if (showNormals) {
-				terrain.draw(projection, view, normalsShader, light.position);
+				if (mouseLook) {
+					mouseLook = false;
+				}
 			}
-			
-			light.draw(projection, view, lightShader);
-			skybox.draw(projection, view, skyboxShader);
 
-			text.renderText(textShader, "Framerate: "+std::to_string(deltaTime), 25.0f, 25.0f, 1.0f, glm::vec3(1, 1, 1));
-			glm::vec3 cPos = camera.getCameraPosition();
-			text.renderText(textShader, "Camera: x" + std::to_string(cPos.x) + " y: " + std::to_string(cPos.y) + " z: " + std::to_string(cPos.x), 25.0f, 50.0f, 1.0f, glm::vec3(1, 1, 1));
+			if (input.isQuit()) { quit = true; }
 
-            SDL_GL_SwapWindow(window);
-        } else {
-            SDL_Delay(1);
-        }
+			accumulator -= dt;
+			t += dt;
+			numFrames++;
+		}
+
+		if (t >= 1.0) {
+			framesMS = 1000.0 / double(numFrames);
+			t = 0.0;
+			numFrames = 0;
+		}
+
+		/*--------------------
+		SCREEN CLEAR AND RESET
+		---------------------*/
+
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
+
+		/*--------------
+		RENDER ENTITIES
+		---------------*/
+
+		terrain.draw(projection, view, terrainDiffuseShader, light.position);
+
+		if (showNormals) {
+			terrain.draw(projection, view, normalsShader, light.position);
+		}
+
+		light.draw(projection, view, lightShader);
+		skybox.draw(projection, view, skyboxShader);
+
+		/*--------------
+		RENDER TEXT
+		---------------*/
+
+		// frames per second
+		//text.renderText(textShader, "Delta: " + std::to_string(deltaTime), 25.0f, 75.0f, 1.0f, glm::vec3(1, 1, 1));
+		text.renderText(textShader, "Frames per second: "+std::to_string(framesMS), 25.0f, 25.0f, 1.0f, glm::vec3(1, 1, 1));
+
+
+		// Camera positions
+		glm::vec3 cPos = camera.getCameraPosition();
+		text.renderText(textShader, "Camera: x" + std::to_string(cPos.x) + " y: " + std::to_string(cPos.y) + " z: " + std::to_string(cPos.x), 25.0f, 50.0f, 1.0f, glm::vec3(1, 1, 1));
+
+		SDL_GL_SwapWindow(window);
     }
 	
 	oglSystem.deInitialize(window, context);
 
-	cout << "successful exit";
+	std::cout << "successful exit" << std::endl;;
 	return 0;
 }
