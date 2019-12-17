@@ -52,6 +52,16 @@ void Terrain::decreaseHeightScale() {
 	this->heightScale -= 0.01f;
 }
 
+int Terrain::verticesCount()
+{
+	return this->mesh.size();
+}
+
+int Terrain::indicesCount()
+{
+	return this->indices.size();
+}
+
 void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition) {
 	glBindTexture(GL_TEXTURE_2D, this->diffuseTextureID);
 	shader.use();

@@ -211,13 +211,10 @@ int main( int argc, char* args[] )
 		/*--------------
 		RENDER TEXT
 		---------------*/
-
-		// frames per second
-		//text.renderText(textShader, "Delta: " + std::to_string(deltaTime), 25.0f, 75.0f, 1.0f, glm::vec3(1, 1, 1));
 		text.renderText(textShader, "Frames per second: "+std::to_string(framesMS), 25.0f, 25.0f, 1.0f, glm::vec3(1, 1, 1));
+		text.renderText(textShader, "vertices: " + std::to_string(terrain.verticesCount()), 25.0f, 400.0f, 1.0f, glm::vec3(1, 1, 1));
+		text.renderText(textShader, "indices: " + std::to_string(terrain.indicesCount()), 25.0f, 425.0f, 1.0f, glm::vec3(1, 1, 1));
 
-
-		// Camera positions
 		glm::vec3 cPos = camera.getCameraPosition();
 		text.renderText(textShader, "Camera: x" + std::to_string(cPos.x) + " y: " + std::to_string(cPos.y) + " z: " + std::to_string(cPos.x), 25.0f, 50.0f, 1.0f, glm::vec3(1, 1, 1));
 

@@ -24,6 +24,8 @@ class Terrain
         void draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition);
 		void increaseHeightScale();
 		void decreaseHeightScale();
+		int verticesCount();
+		int indicesCount();
     private:
         unsigned int VAO;
         unsigned int VBO;
