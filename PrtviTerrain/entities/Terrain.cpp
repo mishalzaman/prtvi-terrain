@@ -12,7 +12,7 @@ Terrain::~Terrain() {
 
 }
 
-bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilename)
+bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilename, const char * normalMapFilename)
 {
 	std::clock_t begin = clock();
 	if (!LdrPGM::load(heightmapFilename, this->heightmapData))
@@ -31,15 +31,21 @@ bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilena
 	printf("Load normals duration: %f\n", duration);
 	
 	begin = clock();
-	OglGenVertexAttributes::generate(this->VAO, this->VBO, this->mesh, this->indices, 4);
+	OglGenVertexAttributes::generate(this->VAO, this->VBO, this->mesh, this->indices, 3);
 	duration = (clock() - begin);
 	printf("Load VBO and VAO duration: %f\n", duration);
 
 	begin = clock();
-	if (OglGenTexture::bind2dNearest(diffusemapFilename, diffuseTextureID))
+	if (!OglGenTexture::bind2dLinear(diffusemapFilename, this->diffuseTextureID))
 		return false;
 	duration = (clock() - begin);
 	printf("Load diffuse map duration: %f\n", duration);
+
+	begin = clock();
+	if (!OglGenTexture::bind2dLinear(normalMapFilename, this->normalMapTextureID))
+		return false;
+	duration = (clock() - begin);
+	printf("Load normal map duration: %f\n", duration);
 
 	return true;
 }
@@ -62,15 +68,25 @@ int Terrain::indicesCount()
 	return this->indices.size();
 }
 
-void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition) {
-	glBindTexture(GL_TEXTURE_2D, this->diffuseTextureID);
+void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition, glm::vec3 viewPos) {
+
 	shader.use();
+
+	// assign textures to sampler2D names
+	shader.setInt("diffuseMap", 0);
+	shader.setInt("normalMap", 1);
+
+	// activate textures to ID
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, this->diffuseTextureID);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->normalMapTextureID);
+
     shader.setMat4("projection", projection);
     shader.setMat4("view", view);
 	shader.setFloat("scale", this->heightScale);
-
-	glBindVertexArray(this->VAO);
 	shader.setMat4("model", this->model);
+	shader.setVec3("viewPos", viewPos);
 
 	// light properties
 	glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -78,5 +94,6 @@ void Terrain::draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::
 	shader.setVec3("lightPos", lightPosition);
 	shader.setVec3("objectColor", glm::vec3(0.6f, 0.6f, 0.6f));
 
+	glBindVertexArray(this->VAO);
 	glDrawElements(GL_TRIANGLES, (GLsizei)this->indices.size() * 3, GL_UNSIGNED_INT, 0);
 }

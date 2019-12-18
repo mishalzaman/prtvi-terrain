@@ -20,8 +20,8 @@ class Terrain
     public:
 		Terrain();
         ~Terrain();
-		bool load(const char* heightmapFilename, const char* diffusemapFilename);
-        void draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition);
+		bool load(const char* heightmapFilename, const char* diffusemapFilename, const char * normalMapFilename);
+        void draw(glm::mat4& projection, glm::mat4& view, Shader& shader, glm::vec3 lightPosition, glm::vec3 viewPos);
 		void increaseHeightScale();
 		void decreaseHeightScale();
 		int verticesCount();
@@ -42,6 +42,9 @@ class Terrain
 
 		// diffuse map
 		GLuint diffuseTextureID;
+
+		// normal map
+		GLuint normalMapTextureID;
 };
 
 #endif TERRAIN_H

@@ -103,9 +103,9 @@ void Heightmap::normals(std::vector<STVertex> &mesh, std::vector<glm::uvec3> &in
 		mesh[indices[i].y].tangent = glm::cross(bitangent, normal);
 		mesh[indices[i].x].tangent = glm::cross(bitangent, normal);
 
-		mesh[indices[i].z].bitangent = glm::cross(tangent, normal);
-		mesh[indices[i].y].bitangent = glm::cross(tangent, normal);
-		mesh[indices[i].x].bitangent = glm::cross(tangent, normal);
+		//mesh[indices[i].z].bitangent = glm::cross(tangent, normal);
+		//mesh[indices[i].y].bitangent = glm::cross(tangent, normal);
+		//mesh[indices[i].x].bitangent = glm::cross(tangent, normal);
 	}
 }
 

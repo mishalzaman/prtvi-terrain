@@ -79,7 +79,7 @@ int main( int argc, char* args[] )
     LOAD
     ------*/
 
-	terrain.load("assets/heightmap513.pgm", "assets/diffuse513.png");
+	terrain.load("assets/heightmap1025.pgm", "assets/diffuse1025.png", "assets/normal1025.png");
 	light.load(glm::vec3(0,10,0));
 	skybox.load();
 	text.load(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -199,10 +199,10 @@ int main( int argc, char* args[] )
 		RENDER ENTITIES
 		---------------*/
 
-		terrain.draw(projection, view, terrainDiffuseShader, light.position);
+		terrain.draw(projection, view, terrainDiffuseShader, light.position, camera.getCameraPosition());
 
 		if (showNormals) {
-			terrain.draw(projection, view, normalsShader, light.position);
+			terrain.draw(projection, view, normalsShader, light.position, camera.getCameraPosition());
 		}
 
 		light.draw(projection, view, lightShader);
