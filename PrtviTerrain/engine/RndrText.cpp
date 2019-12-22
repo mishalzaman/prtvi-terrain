@@ -11,7 +11,7 @@ RndrText::RndrText()
 		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
 	// set the font size
-	FT_Set_Pixel_Sizes(face, 0, 12);
+	FT_Set_Pixel_Sizes(face, 0, 16);
 }
 
 
@@ -57,8 +57,8 @@ void RndrText::load(int screenWidth, int screenHeight)
 		// Set texture options
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		// Now store character for later use
 		Character character = {
 			texture,
@@ -87,11 +87,11 @@ void RndrText::loadBuffers() {
 	glBindVertexArray(0);
 }
 
-void RndrText::renderText(Shader &s, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color) {
+void RndrText::renderText(Shader &s, std::string text, GLfloat x, GLfloat y) {
 	// Activate corresponding render state	
 	s.use();
 	s.setMat4("projection", this->projection);
-	s.setVec3("textColor", glm::vec3(color.x, color.y, color.z));
+	s.setVec3("textColor", this->colour);
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);
 
@@ -101,11 +101,11 @@ void RndrText::renderText(Shader &s, std::string text, GLfloat x, GLfloat y, GLf
 	{
 		Character ch = Characters[*c];
 
-		GLfloat xpos = x + ch.Bearing.x * scale;
-		GLfloat ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
+		GLfloat xpos = x + ch.Bearing.x * this->scale;
+		GLfloat ypos = y - (ch.Size.y - ch.Bearing.y) * this->scale;
 
-		GLfloat w = ch.Size.x * scale;
-		GLfloat h = ch.Size.y * scale;
+		GLfloat w = ch.Size.x * this->scale;
+		GLfloat h = ch.Size.y * this->scale;
 		// Update VBO for each character
 		GLfloat vertices[6][4] = {
 			{ xpos,     ypos + h,   0.0, 0.0 },
@@ -125,8 +125,18 @@ void RndrText::renderText(Shader &s, std::string text, GLfloat x, GLfloat y, GLf
 		// Render quad
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		// Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-		x += (ch.Advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
+		x += (ch.Advance >> 6) * this->scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
 	}
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void RndrText::setScale(float scale)
+{
+	this->scale = scale;
+}
+
+void RndrText::setColour(glm::vec3 colour)
+{
+	this->colour = colour;
 }

@@ -22,7 +22,9 @@ public:
 	RndrText();
 	~RndrText();
 	void load(int screenWidth, int screenHeight);
-	void renderText(Shader &s, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
+	void renderText(Shader &s, std::string text, GLfloat x, GLfloat y);
+	void setScale(float scale);
+	void setColour(glm::vec3 colour);
 private:
 	int screenWidth;
 	int screenHeight;
@@ -31,6 +33,8 @@ private:
 	glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
 	FT_Library ft;
 	FT_Face face;
+	float scale = 1.0f;
+	glm::vec3 colour = glm::vec3(1, 1, 1);
 	std::map<GLchar, Character> Characters;
 	void loadBuffers();
 };

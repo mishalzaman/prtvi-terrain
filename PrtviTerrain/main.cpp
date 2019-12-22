@@ -85,11 +85,6 @@ int main( int argc, char* args[] )
 /*------------------
 				LOAD
 -------------------*/
-				glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-				glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
-
 				terrain.load("assets/heightmap1025.pgm", "assets/diffuse1025.png", "assets/normal1025.png");
 				light.load(glm::vec3(0, 10, 0));
 				skybox.load();
@@ -194,11 +189,11 @@ int main( int argc, char* args[] )
 				/*--------------
 				RENDER TEXT
 				---------------*/
-				text.renderText(textShader, "vertices: " + std::to_string(terrain.verticesCount()), 25.0f, 400.0f, 1.0f, glm::vec3(1, 1, 1));
-				text.renderText(textShader, "indices: " + std::to_string(terrain.indicesCount()), 25.0f, 425.0f, 1.0f, glm::vec3(1, 1, 1));
+				text.renderText(textShader, "vertices: " + std::to_string(terrain.verticesCount()), 25.0f, 400.0f);
+				text.renderText(textShader, "indices: " + std::to_string(terrain.indicesCount()), 25.0f, 425.0f);
 
 				glm::vec3 cPos = camera.getCameraPosition();
-				text.renderText(textShader, "Camera: x" + std::to_string(cPos.x) + " y: " + std::to_string(cPos.y) + " z: " + std::to_string(cPos.x), 25.0f, 50.0f, 1.0f, glm::vec3(1, 1, 1));
+				text.renderText(textShader, "Camera: x" + std::to_string(cPos.x) + " y: " + std::to_string(cPos.y) + " z: " + std::to_string(cPos.x), 25.0f, 50.0f);
 
 				SDL_GL_SwapWindow(window);
 
