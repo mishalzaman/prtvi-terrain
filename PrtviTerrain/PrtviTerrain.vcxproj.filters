@@ -64,6 +64,9 @@
     <ClCompile Include="engine\Shader.cpp">
       <Filter>engine</Filter>
     </ClCompile>
+    <ClCompile Include="engine\StateMachine.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entities\Light.h">
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="structs\STVertex.h">
       <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\StateMachine.h">
+      <Filter>engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

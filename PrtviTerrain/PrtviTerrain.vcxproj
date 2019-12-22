@@ -133,6 +133,7 @@
     <ClCompile Include="engine\RndrText.cpp" />
     <ClCompile Include="engine\Shader.cpp" />
     <ClCompile Include="engine\Sphere.cpp" />
+    <ClCompile Include="engine\StateMachine.cpp" />
     <ClCompile Include="entities\SkyBox.cpp" />
     <ClCompile Include="entities\Terrain.cpp" />
     <ClCompile Include="entities\Light.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="engine\RndrText.h" />
     <ClInclude Include="engine\Shader.h" />
     <ClInclude Include="engine\Sphere.h" />
+    <ClInclude Include="engine\StateMachine.h" />
     <ClInclude Include="entities\SkyBox.h" />
     <ClInclude Include="entities\Light.h" />
     <ClInclude Include="entities\Terrain.h" />
