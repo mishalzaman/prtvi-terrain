@@ -16,6 +16,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <StateMachine.h>
 
 using namespace std;
 
@@ -69,156 +70,141 @@ int main( int argc, char* args[] )
 	Light light			        = Light();
 	SkyBox skybox			    = SkyBox();
 	RndrText text				= RndrText();
+	SM::State state				= SM::State();
+	glm::mat4 projection		= glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
+	glm::mat4 view				= camera.getViewMatrix();
 
-	// Projection / View
-	glm::mat4 projection	= glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
-	glm::mat4 view			= camera.getViewMatrix();
-
-
-    /*------
-    LOAD
-    ------*/
-
-	terrain.load("assets/heightmap1025.pgm", "assets/diffuse1025.png", "assets/normal1025.png");
-	light.load(glm::vec3(0,10,0));
-	skybox.load();
-	text.load(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	// semi fixed timestep
-	// https://gafferongames.com/post/fix_your_timestep/
-
-	double t = 0.0;
 	double dt = 1 / 60.0;
 
-	double currentTime = SDL_GetTicks();
-	double accumulator = 0.0;
-	double numFrames = 0;
-	double framesMS = 0.0;
+	state.ToLoad();
 		
     while (!quit)
     {
-		double newTime = SDL_GetTicks();
-		double frameTime = newTime - currentTime;
-		if (frameTime > 0.25) {
-			frameTime = 0.25;
-		}
+		switch (state.current()) {
+			case SM::LOAD:
+/*------------------
+				LOAD
+-------------------*/
+				glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		currentTime = newTime;
-		accumulator += frameTime;
+				glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
 
-		while (accumulator >= dt) {
-			/*---------------------
-			INPUT / UPDATE PHYSICS
-			---------------------*/
+				terrain.load("assets/heightmap1025.pgm", "assets/diffuse1025.png", "assets/normal1025.png");
+				light.load(glm::vec3(0, 10, 0));
+				skybox.load();
+				text.load(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-			input.update(dt);
+				state.ToUpdate();
+				break;
+			case SM::UPDATE:
+/*-----------------------------
+				INPUT / PHYSICS
+------------------------------*/
 
-			if (input.isLShift()) {
-				oglSystem.enableMouseCursor(false);
+				input.update(dt);
 
-				if (!mouseLook) {
-					SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
-					mouseLook = true;
-				}
-				else {
-					if (input.isMouseMotion()) {
-						int x, y;
-						SDL_GetMouseState(&x, &y);
-						camera.mousePositionUpdate(dt, x, y);
+				if (input.isLShift()) {
+					oglSystem.enableMouseCursor(false);
+
+					if (!mouseLook) {
 						SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
+						mouseLook = true;
+					}
+					else {
+						if (input.isMouseMotion()) {
+							int x, y;
+							SDL_GetMouseState(&x, &y);
+							camera.mousePositionUpdate(dt, x, y);
+							SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
+						}
+
+						view = camera.getViewMatrix();
 					}
 
-					view = camera.getViewMatrix();
+					if (input.isW()) { camera.forward(dt); };
+					if (input.isS()) { camera.backward(dt); };
+					if (input.isA()) { camera.strafeLeft(dt); };
+					if (input.isD()) { camera.strafeRight(dt); };
+					if (input.isUpArrow()) { light.forward(); }
+					if (input.isDownArrow()) { light.backward(); }
+				}
+				else if (input.isZ()) {
+					terrain.increaseHeightScale();
+				}
+				else if (input.isX()) {
+					terrain.decreaseHeightScale();
+				}
+				else if (input.isP()) {
+					oglSystem.enableWireframe(true);
+				}
+				else if (input.isO()) {
+					oglSystem.enableWireframe(false);
+				}
+				else if (input.isLeftArrow()) {
+					light.left();
+				}
+				else if (input.isRightArrow()) {
+					light.right();
+				}
+				else if (input.isUpArrow()) {
+					light.up();
+				}
+				else if (input.isDownArrow()) {
+					light.down();
+				}
+				else if (input.isL()) {
+					showNormals = !showNormals;
+				}
+				else {
+					oglSystem.enableMouseCursor(true);
+
+					if (mouseLook) {
+						mouseLook = false;
+					}
 				}
 
-				if (input.isW()) { camera.forward(dt); };
-				if (input.isS()) { camera.backward(dt); };
-				if (input.isA()) { camera.strafeLeft(dt); };
-				if (input.isD()) { camera.strafeRight(dt); };
-				if (input.isUpArrow()) { light.forward(); }
-				if (input.isDownArrow()) { light.backward(); }
-			}
-			else if (input.isZ()) {
-				terrain.increaseHeightScale();
-			}
-			else if (input.isX()) {
-				terrain.decreaseHeightScale();
-			}
-			else if (input.isP()) {
-				oglSystem.enableWireframe(true);
-			}
-			else if (input.isO()) {
-				oglSystem.enableWireframe(false);
-			}
-			else if (input.isLeftArrow()) {
-				light.left();
-			}
-			else if (input.isRightArrow()) {
-				light.right();
-			}
-			else if (input.isUpArrow()) {
-				light.up();
-			}
-			else if (input.isDownArrow()) {
-				light.down();
-			}
-			else if (input.isL()) {
-				showNormals = !showNormals;
-			}
-			else {
-				oglSystem.enableMouseCursor(true);
+				if (input.isQuit()) { quit = true; }
 
-				if (mouseLook) {
-					mouseLook = false;
+				state.ToRenderGeometry();
+				break;
+			case SM::RENDER_GEOMETRY:
+/*-----------------------------
+				RENDER GEOMETRY
+------------------------------*/
+
+				glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+				glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
+
+				/*--------------
+				RENDER ENTITIES
+				---------------*/
+
+				terrain.draw(projection, view, terrainDiffuseShader, light.position, camera.getCameraPosition());
+
+				if (showNormals) {
+					terrain.draw(projection, view, normalsShader, light.position, camera.getCameraPosition());
 				}
-			}
 
-			if (input.isQuit()) { quit = true; }
+				light.draw(projection, view, lightShader);
+				skybox.draw(projection, view, skyboxShader);
 
-			accumulator -= dt;
-			t += dt;
-			numFrames++;
+				/*--------------
+				RENDER TEXT
+				---------------*/
+				text.renderText(textShader, "vertices: " + std::to_string(terrain.verticesCount()), 25.0f, 400.0f, 1.0f, glm::vec3(1, 1, 1));
+				text.renderText(textShader, "indices: " + std::to_string(terrain.indicesCount()), 25.0f, 425.0f, 1.0f, glm::vec3(1, 1, 1));
+
+				glm::vec3 cPos = camera.getCameraPosition();
+				text.renderText(textShader, "Camera: x" + std::to_string(cPos.x) + " y: " + std::to_string(cPos.y) + " z: " + std::to_string(cPos.x), 25.0f, 50.0f, 1.0f, glm::vec3(1, 1, 1));
+
+				SDL_GL_SwapWindow(window);
+
+				state.ToUpdate();
+				break;
 		}
-
-		if (t >= 1.0) {
-			framesMS = 1000.0 / double(numFrames);
-			t = 0.0;
-			numFrames = 0;
-		}
-
-		/*--------------------
-		SCREEN CLEAR AND RESET
-		---------------------*/
-
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
-
-		/*--------------
-		RENDER ENTITIES
-		---------------*/
-
-		terrain.draw(projection, view, terrainDiffuseShader, light.position, camera.getCameraPosition());
-
-		if (showNormals) {
-			terrain.draw(projection, view, normalsShader, light.position, camera.getCameraPosition());
-		}
-
-		light.draw(projection, view, lightShader);
-		skybox.draw(projection, view, skyboxShader);
-
-		/*--------------
-		RENDER TEXT
-		---------------*/
-		text.renderText(textShader, "Frames per second: "+std::to_string(framesMS), 25.0f, 25.0f, 1.0f, glm::vec3(1, 1, 1));
-		text.renderText(textShader, "vertices: " + std::to_string(terrain.verticesCount()), 25.0f, 400.0f, 1.0f, glm::vec3(1, 1, 1));
-		text.renderText(textShader, "indices: " + std::to_string(terrain.indicesCount()), 25.0f, 425.0f, 1.0f, glm::vec3(1, 1, 1));
-
-		glm::vec3 cPos = camera.getCameraPosition();
-		text.renderText(textShader, "Camera: x" + std::to_string(cPos.x) + " y: " + std::to_string(cPos.y) + " z: " + std::to_string(cPos.x), 25.0f, 50.0f, 1.0f, glm::vec3(1, 1, 1));
-
-		SDL_GL_SwapWindow(window);
     }
 	
 	oglSystem.deInitialize(window, context);
