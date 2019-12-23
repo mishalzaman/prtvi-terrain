@@ -15,7 +15,8 @@ class Light
 public:
 	Light();
 	~Light();
-	void load(glm::vec3 position);
+	void loadVertices(glm::vec3 position);
+	void loadOGLBuffers();
 	void draw(glm::mat4& projection, glm::mat4& view, Shader& shader);
 	glm::vec3 position = glm::vec3(0, 0, 0);
 	void up();

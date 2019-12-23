@@ -17,6 +17,9 @@
 #include <vector>
 #include <algorithm>
 #include <StateMachine.h>
+#include <future>
+#include <thread>
+#include <functional>
 
 using namespace std;
 
@@ -29,6 +32,8 @@ OGLSystem oglSystem = OGLSystem();
 bool quit                    = false;
 bool mouseLook               = false;
 bool showNormals			 = false;
+
+void loadTerrainThread(Terrain& terrain, std::atomic<bool>& done);
 
 int main( int argc, char* args[] )
 {
@@ -77,21 +82,47 @@ int main( int argc, char* args[] )
 	double dt = 1 / 60.0;
 
 	state.ToLoad();
-		
+
+	std::atomic<bool> done(false);
+
+	// https://www.tutorialcup.com/cplusplus/multithreading.htm
+	std::thread loadTerrain([&] {
+		terrain.loadVertices("assets/heightmap1025.pgm", "assets/diffuse1025.png", "assets/normal1025.png");
+		light.loadVertices(glm::vec3(0, 10, 0));
+		done = true;
+		});
+	
+	text.load(SCREEN_WIDTH, SCREEN_HEIGHT);
+
     while (!quit)
     {
 		switch (state.current()) {
-			case SM::LOAD:
-/*------------------
-				LOAD
--------------------*/
-				terrain.load("assets/heightmap1025.pgm", "assets/diffuse1025.png", "assets/normal1025.png");
-				light.load(glm::vec3(0, 10, 0));
-				skybox.load();
-				text.load(SCREEN_WIDTH, SCREEN_HEIGHT);
+			case SM::LOAD: {
+				/*------------------
+								LOAD
+				-------------------*/
+				if (done) {
+					terrain.loadOGLBuffers("assets/diffuse1025.png", "assets/normal1025.png");
+					light.loadOGLBuffers();
+					skybox.load();
+					 
+					loadTerrain.join();
 
-				state.ToUpdate();
+					state.ToUpdate();
+					break;
+				}
+
+				glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+				glViewport(0, 0, (int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
+
+				text.renderText(textShader, "LOADING...", 25.0f, 25.0f);
+
+				SDL_GL_SwapWindow(window);
+
 				break;
+			}
 			case SM::UPDATE:
 /*-----------------------------
 				INPUT / PHYSICS

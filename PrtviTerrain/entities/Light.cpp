@@ -9,11 +9,15 @@ Light::~Light()
 {
 }
 
-void Light::load(glm::vec3 position)
+void Light::loadVertices(glm::vec3 position)
 {
 	this->position = position;
 
 	Sphere::create(this->mesh, this->indices, 16, 16);
+}
+
+void Light::loadOGLBuffers()
+{
 	OglGenVertexAttributes::generate(this->VAO, this->VBO, this->mesh, this->indices, 0);
 }
 

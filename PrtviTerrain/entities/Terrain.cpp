@@ -12,7 +12,7 @@ Terrain::~Terrain() {
 
 }
 
-bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilename, const char * normalMapFilename)
+bool Terrain::loadVertices(const char * heightmapFilename, const char * diffusemapFilename, const char * normalMapFilename)
 {
 	std::clock_t begin = clock();
 	if (!LdrPGM::load(heightmapFilename, this->heightmapData))
@@ -30,9 +30,16 @@ bool Terrain::load(const char * heightmapFilename, const char * diffusemapFilena
 	duration = (clock() - begin) / 1000;
 	printf("Load normals duration: %f\n", duration);
 	
+	return true;
+}
+
+bool Terrain::loadOGLBuffers(const char* diffusemapFilename, const char* normalMapFilename)
+{
+	std::clock_t begin = clock();
+
 	begin = clock();
 	OglGenVertexAttributes::generate(this->VAO, this->VBO, this->mesh, this->indices, 3);
-	duration = (clock() - begin);
+	float duration = (clock() - begin) / 1000;
 	printf("Load VBO and VAO duration: %f\n", duration);
 
 	begin = clock();
