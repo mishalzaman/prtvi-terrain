@@ -24,8 +24,8 @@ public:
 	glm::vec3 getCameraPosition();
 	void updatePosition(glm::vec3 position);
 private:
-	float speed = 1.0f;
-	float mouseSensitivity = 1.0f;
+	float speed = 4.0f;
+	float mouseSensitivity = 4.0f;
 	int screenWidthMid;
 	int screenHeightMid;
 
