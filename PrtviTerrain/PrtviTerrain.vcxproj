@@ -126,7 +126,6 @@
     <ClCompile Include="engine\Heightmap.cpp" />
     <ClCompile Include="engine\Input.cpp" />
     <ClCompile Include="engine\LdrPGM.cpp" />
-    <ClCompile Include="engine\OGLSystem.cpp" />
     <ClCompile Include="engine\LdrStbiWrapper.cpp" />
     <ClCompile Include="engine\OGLGenTexture.cpp" />
     <ClCompile Include="engine\OGLGenVertexAttrbitutes.cpp" />
@@ -134,6 +133,9 @@
     <ClCompile Include="engine\Shader.cpp" />
     <ClCompile Include="engine\Sphere.cpp" />
     <ClCompile Include="engine\StateMachine.cpp" />
+    <ClCompile Include="engine\SysOpenGLInit.cpp" />
+    <ClCompile Include="engine\SysOpenGLSetting.cpp" />
+    <ClCompile Include="engine\UserInput.cpp" />
     <ClCompile Include="entities\SkyBox.cpp" />
     <ClCompile Include="entities\Terrain.cpp" />
     <ClCompile Include="entities\Light.cpp" />
@@ -144,7 +146,6 @@
     <ClInclude Include="engine\Heightmap.h" />
     <ClInclude Include="engine\Input.h" />
     <ClInclude Include="engine\LdrPGM.h" />
-    <ClInclude Include="engine\OGLSystem.h" />
     <ClInclude Include="engine\LdrStbiWrapper.h" />
     <ClInclude Include="engine\OGLGenTexture.h" />
     <ClInclude Include="engine\OGLGenVertexAttrbitutes.h" />
@@ -152,6 +153,9 @@
     <ClInclude Include="engine\Shader.h" />
     <ClInclude Include="engine\Sphere.h" />
     <ClInclude Include="engine\StateMachine.h" />
+    <ClInclude Include="engine\SysOpenGLInit.h" />
+    <ClInclude Include="engine\SysOpenGLSetting.h" />
+    <ClInclude Include="engine\UserInput.h" />
     <ClInclude Include="entities\SkyBox.h" />
     <ClInclude Include="entities\Light.h" />
     <ClInclude Include="entities\Terrain.h" />

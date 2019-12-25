@@ -4,7 +4,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include <OGLSystem.h>
 #include <CameraFreeLook.h>
 #include <Input.h>
 #include <Shader.h>
@@ -17,6 +16,9 @@
 #include <vector>
 #include <algorithm>
 #include <StateMachine.h>
+#include <SysOpenGLInit.h>
+#include <SysOpenGLSetting.h>
+#include <UserInput.h>
 
 using namespace std;
 
@@ -25,33 +27,28 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 SDL_Window* window;
 SDL_GLContext context;
-OGLSystem oglSystem = OGLSystem();
 bool quit                    = false;
 bool mouseLook               = false;
 bool showNormals			 = false;
+int engineError;
 
 int main( int argc, char* args[] )
 {
-	int iSError = oglSystem.initialize(
-		window, 
-		context, 
-		SCREEN_WIDTH, 
-		SCREEN_HEIGHT, 
-		3, 
-		3
-	);
+	if (engineError = SystemOpenGLInit::initSDL() > 0) return engineError;
+	if (engineError = SystemOpenGLInit::setGlAttributes(3, 3) > 0) return engineError;
+	if (engineError = SystemOpenGLInit::initWindow(window, SCREEN_WIDTH, SCREEN_HEIGHT) > 0) return engineError;
+	if (engineError = SystemOpenGLInit::initContext(context, window) > 0) return engineError;
+	if (engineError = SystemOpenGLInit::initGlew() > 0) return engineError;
 
-	if (iSError > 0) {
-		return iSError;
-	}
-
-    // OpenGL options
-	oglSystem.enableDepthTest(true);
-	oglSystem.enableMouseCursor(true);
-	oglSystem.enableMouseCapture(true);
-	oglSystem.centerMouse(window, SCREEN_WIDTH, SCREEN_HEIGHT);
-	oglSystem.enableWireframe(false);
-	oglSystem.enableCulling(true);
+	/*-------------
+	OPENGL SETTINGS
+	--------------*/
+	SysOpenGLSetting::depthTest(true);
+	SysOpenGLSetting::culling(true);
+	SysOpenGLSetting::mouseCursor(true);
+	SysOpenGLSetting::mouseCapture(true);
+	SysOpenGLSetting::mouseCenter(window, SCREEN_WIDTH, SCREEN_HEIGHT);
+	SysOpenGLSetting::wireframe(false);
 
 	// SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 
@@ -96,70 +93,7 @@ int main( int argc, char* args[] )
 /*-----------------------------
 				INPUT / PHYSICS
 ------------------------------*/
-
-				input.update(dt);
-
-				if (input.isLShift()) {
-					oglSystem.enableMouseCursor(false);
-
-					if (!mouseLook) {
-						SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
-						mouseLook = true;
-					}
-					else {
-						if (input.isMouseMotion()) {
-							int x, y;
-							SDL_GetMouseState(&x, &y);
-							camera.mousePositionUpdate(dt, x, y);
-							SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
-						}
-
-						view = camera.getViewMatrix();
-					}
-
-					if (input.isW()) { camera.forward(dt); };
-					if (input.isS()) { camera.backward(dt); };
-					if (input.isA()) { camera.strafeLeft(dt); };
-					if (input.isD()) { camera.strafeRight(dt); };
-					if (input.isUpArrow()) { light.forward(); }
-					if (input.isDownArrow()) { light.backward(); }
-				}
-				else if (input.isZ()) {
-					terrain.increaseHeightScale();
-				}
-				else if (input.isX()) {
-					terrain.decreaseHeightScale();
-				}
-				else if (input.isP()) {
-					oglSystem.enableWireframe(true);
-				}
-				else if (input.isO()) {
-					oglSystem.enableWireframe(false);
-				}
-				else if (input.isLeftArrow()) {
-					light.left();
-				}
-				else if (input.isRightArrow()) {
-					light.right();
-				}
-				else if (input.isUpArrow()) {
-					light.up();
-				}
-				else if (input.isDownArrow()) {
-					light.down();
-				}
-				else if (input.isL()) {
-					showNormals = !showNormals;
-				}
-				else {
-					oglSystem.enableMouseCursor(true);
-
-					if (mouseLook) {
-						mouseLook = false;
-					}
-				}
-
-				if (input.isQuit()) { quit = true; }
+				UserInput::update(dt, mouseLook, quit, showNormals, SCREEN_WIDTH, SCREEN_HEIGHT, view, window, context, camera, terrain, light, input);
 
 				state.ToRenderGeometry();
 				break;
@@ -202,8 +136,6 @@ int main( int argc, char* args[] )
 		}
     }
 	
-	oglSystem.deInitialize(window, context);
 
-	std::cout << "successful exit" << std::endl;;
-	return 0;
+	return SystemOpenGLInit::shutDown(window, context);
 }
